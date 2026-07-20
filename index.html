@@ -364,6 +364,47 @@
       gap: 10px;
     }
 
+    dialog {
+      width: min(460px, calc(100vw - 24px));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #191617;
+      color: var(--ink);
+      padding: 16px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .58);
+    }
+
+    dialog::backdrop {
+      background: rgba(8, 7, 8, .72);
+    }
+
+    .dialog-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .dialog-head h2 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .icon-button {
+      width: 42px;
+      min-width: 42px;
+      padding: 0;
+      font-size: 1.25rem;
+    }
+
+    .correction-choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
     .notes {
       border-top: 1px solid var(--line);
       padding-top: 14px;
@@ -722,6 +763,10 @@
           <button id="loadObservationJson">Load Matcher Data</button>
           <button id="clearMatcherData">Clear</button>
         </div>
+        <div class="actions">
+          <button id="openLocalObservationJson" type="button">Open Local JSON</button>
+          <button id="saveMergedObservationJson" type="button">Save Updated JSON</button>
+        </div>
         <div class="subtle" id="matcherStatus">No matcher data loaded yet.</div>
         <div class="match-list" id="matchList" aria-label="Observation match results"></div>
       </div>
@@ -734,13 +779,16 @@
               <option value="incorrect">Incorrect</option>
               <option value="correct">Correct</option>
               <option value="partial">Partial match</option>
-              <option value="unknown">Unknown</option>
+              <option value="unknown" selected>Unknown</option>
             </select>
           </div>
           <div class="field">
             <label for="observationSource">Observed on</label>
             <input id="observationSource" placeholder="Switch digital + Repentance DLC, screenshot, Steam post">
           </div>
+        </div>
+        <div class="actions" id="correctionLauncher" hidden>
+          <button id="openIncorrectMapDialog" type="button">Correct Map</button>
         </div>
         <div class="row">
           <div class="field">
@@ -962,10 +1010,13 @@
         </div>
         <div class="actions">
           <button id="saveObservation">Save Observation</button>
-          <button id="exportObservations">Export</button>
+          <button id="saveCorrectionJson" class="primary">Save + Update JSON</button>
         </div>
         <div class="actions">
           <button id="copyObservation">Copy Current JSON</button>
+          <button id="exportObservations">Export Merged JSON</button>
+        </div>
+        <div class="actions">
           <button id="clearObservations">Clear Log</button>
         </div>
         <div class="subtle" id="observationStatusText">No observations saved yet.</div>
@@ -1044,6 +1095,17 @@
       </section>
     </main>
   </div>
+
+  <dialog id="incorrectMapDialog" aria-labelledby="incorrectMapTitle">
+    <div class="dialog-head">
+      <h2 id="incorrectMapTitle">Correct Map</h2>
+      <button id="closeIncorrectMapDialog" class="icon-button" type="button" aria-label="Close" title="Close">&times;</button>
+    </div>
+    <div class="correction-choices">
+      <button id="correctStartRooms" type="button">Starting Rooms</button>
+      <button id="correctFullFloor" type="button">Full Floor</button>
+    </div>
+  </dialog>
 
   <script>
     const alphabet = "ABCDEFGHJKLMNPQRSTWXYZ0123456789";
@@ -1200,6 +1262,9 @@
     const observationJsonInput = document.querySelector("#observationJson");
     const matcherStatusEl = document.querySelector("#matcherStatus");
     const matchListEl = document.querySelector("#matchList");
+    const incorrectMapDialogEl = document.querySelector("#incorrectMapDialog");
+    const correctionLauncherEl = document.querySelector("#correctionLauncher");
+    const observedEditorEl = document.querySelector(".editor-panel");
     const importedSeeds = [];
     const observations = loadObservations();
     let matcherObservations = loadMatcherObservations();
@@ -1208,6 +1273,7 @@
     let lastGenerated = null;
     let observedMap = new Map();
     let selectedObservedCell = "";
+    let observationFileHandle = null;
 
     try {
       const savedCharacter = localStorage.getItem("isaacObservationCharacter");
@@ -1438,7 +1504,7 @@
         const direction = row.dataset.direction;
         const summary = row.querySelector('[data-field="summary"]');
         if (summary) {
-          const value = startRoomChoiceToConstraint(summary.value);
+          const value = startRoomChoiceToConstraint(summary.value, direction);
           if (value) constraints[direction] = value;
           continue;
         }
@@ -1456,7 +1522,39 @@
       return Object.keys(constraints).length ? constraints : null;
     }
 
-    function startRoomChoiceToConstraint(choice) {
+    function orientedRoomConstraint(choice, direction) {
+      const anchors = {
+        north: { dx: 0, dy: -1 },
+        east: { dx: 1, dy: 0 },
+        south: { dx: 0, dy: 1 },
+        west: { dx: -1, dy: 0 }
+      };
+      const extensions = {
+        west: { dx: -1, dy: 0 },
+        east: { dx: 1, dy: 0 },
+        north: { dx: 0, dy: -1 },
+        south: { dx: 0, dy: 1 }
+      };
+      const [axis, extensionDirection] = choice.split("-");
+      const anchor = anchors[direction];
+      const extension = extensions[extensionDirection];
+      if (!anchor || !extension || !["wide", "tall"].includes(axis)) return null;
+      return {
+        exists: true,
+        shape: axis === "wide" ? "2x1" : "1x2",
+        orientation: `extends-${extensionDirection}`,
+        footprintOrigin: "start-room",
+        footprint: [
+          { ...anchor },
+          { dx: anchor.dx + extension.dx, dy: anchor.dy + extension.dy }
+        ]
+      };
+    }
+
+    function startRoomChoiceToConstraint(choice, direction) {
+      if (choice.startsWith("wide-") || choice.startsWith("tall-")) {
+        return orientedRoomConstraint(choice, direction);
+      }
       const values = {
         missing: { exists: false },
         exists: { exists: true },
@@ -1468,7 +1566,7 @@
         boss: { exists: true, type: "boss" },
         secret: { exists: true, type: "secret" },
         special: { exists: true, type: "special" },
-        long: { exists: true, shape: "long" },
+        long: { exists: true, shape: "long", orientation: "unknown" },
         "2x2": { exists: true, shape: "2x2" },
         L: { exists: true, shape: "L" },
         "small/odd": { exists: true, shape: "small/odd" },
@@ -1490,7 +1588,11 @@
         boss: "Boss",
         secret: "Secret room",
         special: "Special/odd room",
-        long: "Long room",
+        long: "Long room, orientation unknown",
+        "wide-west": "2x1 wide, extends west",
+        "wide-east": "2x1 wide, extends east",
+        "tall-north": "1x2 tall, extends north",
+        "tall-south": "1x2 tall, extends south",
         "2x2": "2x2 room",
         L: "L-shaped room",
         "small/odd": "Small/tiny room"
@@ -1499,7 +1601,7 @@
     }
 
     function initializeStartRoomDropdowns() {
-      const choices = [
+      const baseChoices = [
         "unknown",
         "missing",
         "exists",
@@ -1511,14 +1613,20 @@
         "boss",
         "secret",
         "special",
-        "long",
         "2x2",
         "L",
         "small/odd"
       ];
+      const shapeChoices = {
+        north: ["wide-west", "wide-east", "tall-north", "long"],
+        east: ["tall-north", "tall-south", "wide-east", "long"],
+        south: ["wide-west", "wide-east", "tall-south", "long"],
+        west: ["tall-north", "tall-south", "wide-west", "long"]
+      };
       const directionLabels = { north: "North", east: "East", south: "South", west: "West" };
       for (const row of startRoomHelperEl.querySelectorAll(".start-row")) {
         const direction = row.dataset.direction;
+        const choices = [...baseChoices, ...shapeChoices[direction]];
         const select = document.createElement("select");
         select.dataset.field = "summary";
         for (const choice of choices) {
@@ -1567,7 +1675,7 @@
       const labels = { north: "N", east: "E", south: "S", west: "W" };
       const parts = Object.entries(constraints).map(([direction, value]) => {
         if (!value.exists) return `${labels[direction]}: no room`;
-        return `${labels[direction]}: ${[value.type || "room", value.shape].filter(Boolean).join(", ")}`;
+        return `${labels[direction]}: ${[value.type || "room", value.shape, value.orientation].filter(Boolean).join(", ")}`;
       });
       return `Start room - ${parts.join("; ")}`;
     }
@@ -1584,6 +1692,13 @@
         row.querySelector('[data-field="type"]').value = "unknown";
         row.querySelector('[data-field="shape"]').value = "unknown";
       }
+    }
+
+    function openCorrectionTarget(target) {
+      if (incorrectMapDialogEl.open) incorrectMapDialogEl.close();
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      const firstControl = target.querySelector("select, button");
+      if (firstControl) firstControl.focus({ preventScroll: true });
     }
 
     function renderObservations() {
@@ -1610,15 +1725,86 @@
       }
     }
 
-    function exportObservations() {
-      const payload = JSON.stringify(observations, null, 2);
+    function mergedObservationRecords() {
+      const merged = new Map();
+      for (const record of [...matcherObservations, ...observations]) {
+        if (!record || typeof record !== "object") continue;
+        const identity = record.id || [record.normalizedSeed, record.floor, record.createdAt].filter(Boolean).join(":");
+        merged.set(identity || `anonymous-${merged.size}`, record);
+      }
+      return [...merged.values()];
+    }
+
+    function downloadObservationPayload(payload) {
       const blob = new Blob([payload], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "isaac-seed-map-observations.json";
+      link.download = "isaac-seed-observations.json";
       link.click();
       URL.revokeObjectURL(url);
+    }
+
+    function exportObservations() {
+      downloadObservationPayload(JSON.stringify(mergedObservationRecords(), null, 2));
+      observationStatusTextEl.textContent = "Merged observation JSON downloaded.";
+    }
+
+    async function openLocalObservationJson() {
+      if (!("showOpenFilePicker" in window)) {
+        observationFileInput.click();
+        matcherStatusEl.textContent = "Choose the local JSON file. This browser will download updates instead of overwriting it.";
+        return;
+      }
+      try {
+        const [handle] = await window.showOpenFilePicker({
+          multiple: false,
+          types: [{
+            description: "Isaac observations JSON",
+            accept: { "application/json": [".json"] }
+          }]
+        });
+        observationFileHandle = handle;
+        const file = await handle.getFile();
+        const text = await file.text();
+        observationJsonInput.value = text;
+        loadMatcherPayload(text, file.name, { persist: false });
+        matcherStatusEl.textContent = `${matcherObservations.length} observations loaded from writable local file ${file.name}.`;
+      } catch (error) {
+        if (error.name !== "AbortError") matcherStatusEl.textContent = `Could not open local JSON: ${error.message}`;
+      }
+    }
+
+    async function saveMergedObservationJson() {
+      const records = mergedObservationRecords();
+      const payload = JSON.stringify(records, null, 2);
+      if (observationFileHandle) {
+        try {
+          const writable = await observationFileHandle.createWritable();
+          await writable.write(payload);
+          await writable.close();
+          matcherObservations = records;
+          matcherDataSource = "writable local observations JSON";
+          renderMatchResults();
+          return `${records.length} observations written to ${observationFileHandle.name}.`;
+        } catch (error) {
+          downloadObservationPayload(payload);
+          return `Direct write failed (${error.message}); merged JSON downloaded instead.`;
+        }
+      }
+      downloadObservationPayload(payload);
+      return `${records.length} merged observations downloaded as isaac-seed-observations.json.`;
+    }
+
+    function saveCurrentObservation() {
+      const record = currentObservationRecord();
+      observations.push(record);
+      saveObservations();
+      renderObservations();
+      observationNotesInput.value = "";
+      clearStartRoomHelper();
+      clearObservedMap();
+      return record;
     }
 
     function addImportedSeeds(seeds) {
@@ -2294,15 +2480,16 @@
       renderSeedBank();
       render();
     });
-    document.querySelector("#saveObservation").addEventListener("click", () => {
-      observations.push(currentObservationRecord());
-      saveObservations();
-      renderObservations();
-      observationNotesInput.value = "";
-      clearStartRoomHelper();
-      clearObservedMap();
+    document.querySelector("#saveObservation").addEventListener("click", saveCurrentObservation);
+    document.querySelector("#saveCorrectionJson").addEventListener("click", async () => {
+      saveCurrentObservation();
+      observationStatusTextEl.textContent = await saveMergedObservationJson();
     });
     document.querySelector("#exportObservations").addEventListener("click", exportObservations);
+    document.querySelector("#openLocalObservationJson").addEventListener("click", openLocalObservationJson);
+    document.querySelector("#saveMergedObservationJson").addEventListener("click", async () => {
+      matcherStatusEl.textContent = await saveMergedObservationJson();
+    });
     document.querySelector("#copyObservation").addEventListener("click", async () => {
       const payload = JSON.stringify(currentObservationRecord(), null, 2);
       try {
@@ -2350,6 +2537,7 @@
     document.querySelector("#clearMatcherData").addEventListener("click", () => {
       matcherObservations = [];
       matcherDataSource = "";
+      observationFileHandle = null;
       observationJsonInput.value = "";
       observationFileInput.value = "";
       saveMatcherObservations();
@@ -2358,6 +2546,7 @@
     observationFileInput.addEventListener("change", () => {
       const file = observationFileInput.files && observationFileInput.files[0];
       if (!file) return;
+      observationFileHandle = null;
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         observationJsonInput.value = String(reader.result || "");
@@ -2406,6 +2595,17 @@
         // Character selection still works for the current session.
       }
     });
+    observationStatusInput.addEventListener("change", () => {
+      const incorrect = observationStatusInput.value === "incorrect";
+      correctionLauncherEl.hidden = !incorrect;
+      if (incorrect && !incorrectMapDialogEl.open) incorrectMapDialogEl.showModal();
+    });
+    document.querySelector("#openIncorrectMapDialog").addEventListener("click", () => {
+      if (!incorrectMapDialogEl.open) incorrectMapDialogEl.showModal();
+    });
+    document.querySelector("#closeIncorrectMapDialog").addEventListener("click", () => incorrectMapDialogEl.close());
+    document.querySelector("#correctStartRooms").addEventListener("click", () => openCorrectionTarget(startRoomHelperEl));
+    document.querySelector("#correctFullFloor").addEventListener("click", () => openCorrectionTarget(observedEditorEl));
 
     initializeStartRoomDropdowns();
     startMapPresetInput.addEventListener("change", () => applyStartMapPreset(startMapPresetInput.value));
