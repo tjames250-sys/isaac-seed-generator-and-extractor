@@ -453,6 +453,37 @@
       color: #dec78f;
     }
 
+    .start-helper {
+      display: grid;
+      gap: 8px;
+    }
+
+    .start-row {
+      display: grid;
+      grid-template-columns: 42px 1fr 1fr 1fr;
+      gap: 6px;
+      align-items: end;
+    }
+
+    .start-row strong {
+      color: var(--ink);
+      font-size: .85rem;
+      padding-bottom: 10px;
+    }
+
+    .start-row label {
+      display: grid;
+      gap: 5px;
+      text-transform: none;
+      font-size: .72rem;
+    }
+
+    .start-row select {
+      min-height: 36px;
+      padding: 6px 7px;
+      font-size: .82rem;
+    }
+
     code {
       color: #f1d38b;
     }
@@ -638,6 +669,147 @@
           <textarea id="unlockNotes" spellcheck="false" placeholder="Examples: not all tainted characters unlocked; no Death Certificate; shops/angel/devil pools may differ"></textarea>
         </div>
         <div class="field">
+          <label>Start-room correction</label>
+          <div class="start-helper" id="startRoomHelper">
+            <div class="start-row" data-direction="north">
+              <strong>N</strong>
+              <label>Exit
+                <select data-field="presence">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="exists">Room</option>
+                  <option value="missing">No room</option>
+                </select>
+              </label>
+              <label>Type
+                <select data-field="type">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="normal">Normal</option>
+                  <option value="curse">Curse</option>
+                  <option value="library">Library</option>
+                  <option value="treasure">Treasure</option>
+                  <option value="shop">Shop</option>
+                  <option value="boss">Boss</option>
+                  <option value="secret">Secret</option>
+                  <option value="special">Special</option>
+                </select>
+              </label>
+              <label>Shape
+                <select data-field="shape">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="1x1">1x1</option>
+                  <option value="long">Long</option>
+                  <option value="2x2">2x2</option>
+                  <option value="L">L</option>
+                  <option value="small/odd">Small/odd</option>
+                </select>
+              </label>
+            </div>
+            <div class="start-row" data-direction="east">
+              <strong>E</strong>
+              <label>Exit
+                <select data-field="presence">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="exists">Room</option>
+                  <option value="missing">No room</option>
+                </select>
+              </label>
+              <label>Type
+                <select data-field="type">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="normal">Normal</option>
+                  <option value="curse">Curse</option>
+                  <option value="library">Library</option>
+                  <option value="treasure">Treasure</option>
+                  <option value="shop">Shop</option>
+                  <option value="boss">Boss</option>
+                  <option value="secret">Secret</option>
+                  <option value="special">Special</option>
+                </select>
+              </label>
+              <label>Shape
+                <select data-field="shape">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="1x1">1x1</option>
+                  <option value="long">Long</option>
+                  <option value="2x2">2x2</option>
+                  <option value="L">L</option>
+                  <option value="small/odd">Small/odd</option>
+                </select>
+              </label>
+            </div>
+            <div class="start-row" data-direction="south">
+              <strong>S</strong>
+              <label>Exit
+                <select data-field="presence">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="exists">Room</option>
+                  <option value="missing">No room</option>
+                </select>
+              </label>
+              <label>Type
+                <select data-field="type">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="normal">Normal</option>
+                  <option value="curse">Curse</option>
+                  <option value="library">Library</option>
+                  <option value="treasure">Treasure</option>
+                  <option value="shop">Shop</option>
+                  <option value="boss">Boss</option>
+                  <option value="secret">Secret</option>
+                  <option value="special">Special</option>
+                </select>
+              </label>
+              <label>Shape
+                <select data-field="shape">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="1x1">1x1</option>
+                  <option value="long">Long</option>
+                  <option value="2x2">2x2</option>
+                  <option value="L">L</option>
+                  <option value="small/odd">Small/odd</option>
+                </select>
+              </label>
+            </div>
+            <div class="start-row" data-direction="west">
+              <strong>W</strong>
+              <label>Exit
+                <select data-field="presence">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="exists">Room</option>
+                  <option value="missing">No room</option>
+                </select>
+              </label>
+              <label>Type
+                <select data-field="type">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="normal">Normal</option>
+                  <option value="curse">Curse</option>
+                  <option value="library">Library</option>
+                  <option value="treasure">Treasure</option>
+                  <option value="shop">Shop</option>
+                  <option value="boss">Boss</option>
+                  <option value="secret">Secret</option>
+                  <option value="special">Special</option>
+                </select>
+              </label>
+              <label>Shape
+                <select data-field="shape">
+                  <option value="unknown" selected>Unknown</option>
+                  <option value="1x1">1x1</option>
+                  <option value="long">Long</option>
+                  <option value="2x2">2x2</option>
+                  <option value="L">L</option>
+                  <option value="small/odd">Small/odd</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="appendStartConstraint" type="button">Add to Notes</button>
+            <button id="clearStartConstraint" type="button">Clear Start</button>
+          </div>
+        </div>
+        <div class="field">
           <label for="observationNotes">Correction notes</label>
           <textarea id="observationNotes" spellcheck="false" placeholder="Example: Boss room east, treasure north, shop missing; actual room count 9"></textarea>
         </div>
@@ -812,6 +984,7 @@
     const observationCharacterInput = document.querySelector("#observationCharacter");
     const unlockProfileInput = document.querySelector("#unlockProfile");
     const unlockNotesInput = document.querySelector("#unlockNotes");
+    const startRoomHelperEl = document.querySelector("#startRoomHelper");
     const observationNotesInput = document.querySelector("#observationNotes");
     const observationStatusTextEl = document.querySelector("#observationStatusText");
     const observationListEl = document.querySelector("#observationList");
@@ -972,7 +1145,8 @@
       const profileName = currentProfileName();
       const profile = currentProfile();
       const floor = floorDefinitions[floorInput.value];
-      return {
+      const startRoomConstraints = readStartRoomConstraints();
+      const record = {
         id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         createdAt: new Date().toISOString(),
         seed: displaySeed(normalized),
@@ -997,6 +1171,46 @@
         notes: observationNotesInput.value.trim(),
         importedSeed: activeImportedSeed
       };
+      if (startRoomConstraints) {
+        record.constraints = { startRoom: startRoomConstraints };
+      }
+      return record;
+    }
+
+    function readStartRoomConstraints() {
+      const constraints = {};
+      for (const row of startRoomHelperEl.querySelectorAll(".start-row")) {
+        const direction = row.dataset.direction;
+        const presence = row.querySelector('[data-field="presence"]').value;
+        if (presence === "unknown") continue;
+
+        const value = { exists: presence === "exists" };
+        const type = row.querySelector('[data-field="type"]').value;
+        const shape = row.querySelector('[data-field="shape"]').value;
+        if (value.exists && type !== "unknown") value.type = type;
+        if (value.exists && shape !== "unknown") value.shape = shape;
+        constraints[direction] = value;
+      }
+      return Object.keys(constraints).length ? constraints : null;
+    }
+
+    function startRoomSummary() {
+      const constraints = readStartRoomConstraints();
+      if (!constraints) return "";
+      const labels = { north: "N", east: "E", south: "S", west: "W" };
+      const parts = Object.entries(constraints).map(([direction, value]) => {
+        if (!value.exists) return `${labels[direction]}: no room`;
+        return `${labels[direction]}: ${[value.type || "room", value.shape].filter(Boolean).join(", ")}`;
+      });
+      return `Start room - ${parts.join("; ")}`;
+    }
+
+    function clearStartRoomHelper() {
+      for (const row of startRoomHelperEl.querySelectorAll(".start-row")) {
+        row.querySelector('[data-field="presence"]').value = "unknown";
+        row.querySelector('[data-field="type"]').value = "unknown";
+        row.querySelector('[data-field="shape"]').value = "unknown";
+      }
     }
 
     function renderObservations() {
@@ -1588,6 +1802,7 @@
       saveObservations();
       renderObservations();
       observationNotesInput.value = "";
+      clearStartRoomHelper();
     });
     document.querySelector("#exportObservations").addEventListener("click", exportObservations);
     document.querySelector("#copyObservation").addEventListener("click", async () => {
@@ -1603,6 +1818,20 @@
       observations.length = 0;
       saveObservations();
       renderObservations();
+    });
+    document.querySelector("#appendStartConstraint").addEventListener("click", () => {
+      const summary = startRoomSummary();
+      if (!summary) {
+        observationStatusTextEl.textContent = "No start-room correction selected.";
+        return;
+      }
+      const current = observationNotesInput.value.trim();
+      observationNotesInput.value = current ? `${current}\n${summary}` : summary;
+      observationStatusTextEl.textContent = "Start-room correction added to notes and will be saved as structured JSON.";
+    });
+    document.querySelector("#clearStartConstraint").addEventListener("click", () => {
+      clearStartRoomHelper();
+      observationStatusTextEl.textContent = "Start-room correction cleared.";
     });
     document.querySelector("#loadObservationJson").addEventListener("click", () => {
       const text = observationJsonInput.value.trim();

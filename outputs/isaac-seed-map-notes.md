@@ -74,6 +74,15 @@ Start-room adjacency is especially valuable. Record it as directional constraint
 
 These constraints are useful because a candidate seed algorithm can be rejected quickly if it places the wrong room type or no room in a known direction.
 
+The prototype includes a start-room correction helper with dropdowns for north/east/south/west exits. Use it for fast reroll data:
+
+- `Unknown` means do not include that direction in the JSON.
+- `Room` records an exit from start.
+- `No room` records a known missing exit.
+- Type and shape are optional; leave them unknown unless obvious.
+
+`Save Observation` stores these constraints in browser localStorage and includes them in exported/copied JSON. The website does not write directly back to GitHub or the shared observations file.
+
 Screenshots are useful even before exact tracing. Save them as screenshot evidence with floor label, time, score, curse state, visible special-room icons, and any caption text. Only promote screenshot details into hard coordinate constraints after manually tracing the minimap.
 
 If a floor is affected by Amnesia, Curse of the Lost, or another map-visibility effect, keep the screenshot but mark it as lower-confidence map evidence. The floor label, time, score, and visible special-room icons can still be useful.
