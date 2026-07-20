@@ -1,0 +1,446 @@
+[
+  {
+    "id": "obs-3w491xyw-start-adjacency-001",
+    "createdAt": "2026-07-16",
+    "seed": "3W49 1XYW",
+    "normalizedSeed": "3W491XYW",
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "character": "Tainted Keeper",
+    "floor": "unknown",
+    "floorLabel": "Unknown",
+    "status": "partial",
+    "source": "user in-game observation",
+    "notes": "Playing as Tainted Keeper. Starting room: curse room to the right/east, library to the south, no room to the left/west, one-space room to the north.",
+    "constraints": {
+      "startRoom": {
+        "east": {
+          "exists": true,
+          "type": "curse"
+        },
+        "south": {
+          "exists": true,
+          "type": "library"
+        },
+        "west": {
+          "exists": false
+        },
+        "north": {
+          "exists": true,
+          "type": "unknown",
+          "distance": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "obs-3w491xyw-run-screenshots-001",
+    "createdAt": "2026-07-16",
+    "seed": "3W49 1XYW",
+    "normalizedSeed": "3W491XYW",
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "character": "Tainted Keeper",
+    "status": "partial",
+    "source": "user screenshot set after run death",
+    "notes": "Screenshot evidence from the same run. User died before new seed. Captures show visited floors and minimap/special-room evidence; exact coordinate reconstruction should be done manually from the screenshots before treating room positions as hard constraints.",
+    "screenshots": [
+      {
+        "file": "1-Photo-1.jpg",
+        "floor": "basement-1",
+        "floorLabel": "Basement I",
+        "time": "00:03:47",
+        "score": 1012,
+        "observations": [
+          "Minimap visible with multiple discovered rooms.",
+          "Special-room icons visible include curse room, library, shop/treasure-style icons, and boss/skull-style icon.",
+          "Matches earlier start-room note broadly enough to keep as same-run evidence."
+        ]
+      },
+      {
+        "file": "2-Photo-2.jpg",
+        "floor": "caves-2",
+        "floorLabel": "Caves II",
+        "time": "00:17:31",
+        "score": 5320,
+        "curse": "Curse of the Unknown",
+        "observations": [
+          "Large minimap visible with many discovered rooms.",
+          "Special-room icons visible include treasure/crown, boss/red icon, shop/coin-key style icon, curse/skull-style icon, and question-mark rooms.",
+          "Useful as a mid-run floor-shape reference, but exact coordinates should be traced from the screenshot."
+        ]
+      },
+      {
+        "file": "3-Photo-3.jpg",
+        "floor": "depths-2",
+        "floorLabel": "Depths II",
+        "time": "00:24:15",
+        "score": 9393,
+        "observations": [
+          "Depths II minimap visible with several special rooms.",
+          "Caption text says Spin the Wheel of Destiny.",
+          "Same floor as 4-Photo-4.jpg, earlier/less complete than the later capture."
+        ]
+      },
+      {
+        "file": "4-Photo-4.jpg",
+        "floor": "depths-2",
+        "floorLabel": "Depths II",
+        "time": "00:31:01",
+        "score": 9038,
+        "observations": [
+          "Depths II minimap visible with more explored rooms than 3-Photo-3.jpg.",
+          "Caption text says Open Sesame.",
+          "Special-room icons visible include treasure/crown, boss/skull-style icon, curse/red icon, shop/coin-key style icon, and question-mark rooms."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "obs-vnrflc68-run-screenshots-001",
+    "createdAt": "2026-07-16",
+    "seed": "VNRF LC68",
+    "normalizedSeed": "VNRFLC68",
+    "seedReadNotes": "Seed read from pause screen as VNRF LC68. User notes the first character does not appear to be Y.",
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "character": "Tainted Keeper",
+    "status": "partial",
+    "source": "user screenshot set after run death",
+    "notes": "Run ended in death. User reports Amnesia on the last two floors, so late-floor minimap evidence may be incomplete or unreliable. Screenshots should be traced manually before converting to hard coordinates.",
+    "screenshots": [
+      {
+        "file": "1-Photo-1.jpg",
+        "floor": "burning-basement-1",
+        "floorLabel": "Burning Basement I",
+        "time": "00:00:51",
+        "score": 760,
+        "captureType": "early floor map",
+        "observations": [
+          "Starting/early floor view with small minimap visible.",
+          "Visible special-room icons include treasure/crown and boss/red icon.",
+          "Room to the right/east of current room is visible on the room screen."
+        ]
+      },
+      {
+        "file": "2-Photo-2.jpg",
+        "floor": "burning-basement-1",
+        "floorLabel": "Burning Basement I",
+        "time": "00:01:32",
+        "score": 1182,
+        "captureType": "later floor map",
+        "observations": [
+          "More complete Burning Basement I minimap visible.",
+          "Visible special-room icons include boss/skull-style icon, treasure/crown, red/boss-style icon, and red item-room style icon.",
+          "Useful for tracing the first-floor shape."
+        ]
+      },
+      {
+        "file": "3-Photo-3.jpg",
+        "floor": "basement-2",
+        "floorLabel": "Basement II",
+        "captureType": "floor entry",
+        "observations": [
+          "Floor entry screenshot with only a few minimap rooms visible.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "4-Photo-4.jpg",
+        "floor": "basement-2",
+        "floorLabel": "Basement II",
+        "time": "00:01:41",
+        "score": 1548,
+        "captureType": "early floor map",
+        "observations": [
+          "Early Basement II minimap visible with three rooms around the start cluster.",
+          "Useful as a start-room/early adjacency reference."
+        ]
+      },
+      {
+        "file": "5-Photo-5.jpg",
+        "floor": "basement-2",
+        "floorLabel": "Basement II",
+        "time": "00:06:24",
+        "score": 2404,
+        "captureType": "later floor map",
+        "caption": "May your power bring rage",
+        "observations": [
+          "More complete Basement II minimap visible.",
+          "Visible special-room icons include treasure/crown, curse/red icon, shop/coin-key style icon, boss/skull-style icon, sacrifice/spike-room style icon, and red item-room style icon.",
+          "Useful for tracing second-floor shape."
+        ]
+      },
+      {
+        "file": "6-Photo-6.jpg",
+        "floor": "basement-2",
+        "floorLabel": "Basement II",
+        "time": "00:07:15",
+        "score": 2164,
+        "captureType": "later floor map",
+        "caption": "May your power bring rage",
+        "observations": [
+          "Basement II minimap from another room near/after boss path.",
+          "Visible special-room icons include boss/skull-style icon, red item-room style icon, treasure/crown, and shop/coin-key style icon.",
+          "Useful cross-check against 5-Photo-5.jpg."
+        ]
+      },
+      {
+        "file": "7-Photo-7.jpg",
+        "floor": "caves-1",
+        "floorLabel": "Caves I",
+        "time": "00:07:27",
+        "score": 2972,
+        "captureType": "floor entry",
+        "caption": "May your power bring rage",
+        "observations": [
+          "Caves I entry screenshot with a small start-area minimap.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "8-Photo-8.jpg",
+        "floor": "caves-1",
+        "floorLabel": "Caves I",
+        "time": "00:11:52",
+        "score": 4121,
+        "captureType": "later floor map",
+        "observations": [
+          "More complete Caves I minimap visible.",
+          "Visible special-room icons include shop/coin-key style icon, boss/skull-style icon, treasure/crown, sacrifice/spike-room style icon, red/boss-style icon, and question-mark rooms.",
+          "Useful for tracing Caves I shape."
+        ]
+      },
+      {
+        "file": "9-Photo-9.jpg",
+        "floor": "flooded-caves-2",
+        "floorLabel": "Flooded Caves II",
+        "time": "00:13:50",
+        "score": 5811,
+        "captureType": "floor entry",
+        "observations": [
+          "Flooded Caves II entry screenshot with only a few minimap rooms visible.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "10-Photo-10.jpg",
+        "floor": "flooded-caves-2",
+        "floorLabel": "Flooded Caves II",
+        "time": "00:17:13",
+        "score": 5961,
+        "captureType": "later floor map",
+        "caption": "Lay waste to all that oppose you",
+        "observations": [
+          "More complete Flooded Caves II minimap visible.",
+          "Visible special-room icons include boss/skull-style icon, treasure/crown, shop/coin-key style icon, curse/red icon, question-mark room, and red/secret-style icon.",
+          "Useful for tracing Flooded Caves II shape."
+        ]
+      },
+      {
+        "file": "11-Photo-11.jpg",
+        "floor": "depths-1",
+        "floorLabel": "Depths I",
+        "time": "00:18:08",
+        "score": 7251,
+        "captureType": "floor entry",
+        "caption": "May the light heal and enlighten you",
+        "amnesiaAffected": true,
+        "observations": [
+          "Depths I entry screenshot.",
+          "User reports Amnesia on last two floors, so map visibility may be reduced or unreliable.",
+          "Good as floor/timing evidence; treat minimap shape cautiously."
+        ]
+      },
+      {
+        "file": "12-Photo-12.jpg",
+        "floor": "depths-1",
+        "floorLabel": "Depths I",
+        "time": "00:24:08",
+        "score": 7247,
+        "captureType": "later floor map",
+        "caption": "Where journey begins",
+        "amnesiaAffected": true,
+        "observations": [
+          "Depths I later minimap visible despite user-reported Amnesia.",
+          "Visible special-room icons include boss/skull-style icon, treasure/crown, shop/coin-key style icon, sacrifice/spike-room style icon, question-mark room, red/boss-style icon, and red item-room style icon.",
+          "Useful but should be treated cautiously due to Amnesia report."
+        ]
+      },
+      {
+        "file": "13-Photo-13.jpg",
+        "floor": "depths-2",
+        "floorLabel": "Depths II",
+        "time": "00:27:15",
+        "score": 9961,
+        "captureType": "floor entry",
+        "caption": "Where journey begins",
+        "amnesiaAffected": true,
+        "observations": [
+          "Depths II entry screenshot with very small minimap visible.",
+          "User reports Amnesia on last two floors, so map visibility may be reduced or unreliable.",
+          "Good as floor/timing evidence."
+        ]
+      },
+      {
+        "file": "14-Photo-14.jpg",
+        "floor": "depths-2",
+        "floorLabel": "Depths II",
+        "captureType": "pause screen / seed confirmation",
+        "amnesiaAffected": true,
+        "observations": [
+          "Pause screen confirms seed VNRF LC68.",
+          "User notes first character is V, not Y.",
+          "Death/end context visible behind pause screen."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "obs-l48ebjnx-run-screenshots-001",
+    "createdAt": "2026-07-16",
+    "seed": "L48E BJNX",
+    "normalizedSeed": "L48EBJNX",
+    "seedReadNotes": "Seed read from death-note screenshot as L48E BJNX. First character appears to be capital L. Second group appears to be BJNX.",
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "character": "Tainted Keeper",
+    "status": "partial",
+    "source": "user screenshot set after run death",
+    "notes": "Run ended in death. Death-note screenshot says the player was killed in some cave. Treat seed read as high confidence but still visually sourced.",
+    "screenshots": [
+      {
+        "file": "1-Photo-1.jpg",
+        "floor": "unknown-cave",
+        "floorLabel": "Some Cave / death screen",
+        "captureType": "death screen / seed confirmation",
+        "seedVisible": "L48E BJNX",
+        "observations": [
+          "Death-note seed appears to read L48E BJNX.",
+          "First character appears to be capital L, not 1.",
+          "Death note says killed in some cave."
+        ]
+      },
+      {
+        "file": "2-Photo-2.jpg",
+        "floor": "cellar-1",
+        "floorLabel": "Cellar I",
+        "time": "00:00:01",
+        "score": 607,
+        "captureType": "floor entry",
+        "observations": [
+          "Cellar I entry screenshot.",
+          "Small start-area minimap visible.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "3-Photo-3.jpg",
+        "floor": "cellar-1",
+        "floorLabel": "Cellar I",
+        "time": "00:04:27",
+        "captureType": "later floor map",
+        "observations": [
+          "More complete Cellar I minimap visible.",
+          "Visible special-room icons include treasure/crown, boss/skull-style icon, curse/drop-style icon, and shop/coin-key style icon.",
+          "Useful for tracing Cellar I shape."
+        ]
+      },
+      {
+        "file": "4-Photo-4.jpg",
+        "floor": "basement-2",
+        "floorLabel": "Basement II",
+        "time": "00:09:09",
+        "score": 2170,
+        "captureType": "later floor map",
+        "observations": [
+          "Basement II minimap visible.",
+          "Visible special-room icons include treasure/crown, boss/skull-style icon, curse/red icon, sacrifice/spike-room style icon, shop/coin-key style icon, and question-mark rooms.",
+          "Useful for tracing Basement II shape."
+        ]
+      },
+      {
+        "file": "5-Photo-5.jpg",
+        "floor": "flooded-caves-xl",
+        "floorLabel": "Flooded Caves XL",
+        "time": "00:10:03",
+        "score": 3012,
+        "captureType": "floor entry",
+        "curse": "Curse of the Labyrinth",
+        "observations": [
+          "Flooded Caves XL entry screenshot.",
+          "Curse of the Labyrinth visible.",
+          "Small start-area minimap visible.",
+          "Good for start-room anchoring on the XL cave floor."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "obs-t1qranby-tainted-azazel-b1-001",
+    "createdAt": "2026-07-19",
+    "seed": "T1QR ANBY",
+    "normalizedSeed": "T1QRANBY",
+    "seedReadNotes": "Seed confirmed by user as T1QR ANBY. Earlier visual read TIQR ANBY was incorrect.",
+    "seedReadConfidence": "confirmed by user",
+    "seedCandidates": [
+      {
+        "seed": "T1QR ANBY",
+        "normalizedSeed": "T1QRANBY",
+        "confidence": "confirmed",
+        "notes": "Confirmed by user; second character is 1."
+      },
+      {
+        "seed": "TIQR ANBY",
+        "normalizedSeed": "TIQRANBY",
+        "confidence": "rejected",
+        "notes": "Earlier visual read; user clarified this was not correct."
+      }
+    ],
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "character": "Tainted Azazel",
+    "status": "partial",
+    "source": "user screenshot pair",
+    "notes": "User labeled this as Tainted Azazel B1. Screenshot pair captures seed confirmation and a Basement I map with Curse of the Blind.",
+    "screenshots": [
+      {
+        "file": "1-Photo-1.jpg",
+        "floor": "basement-1",
+        "floorLabel": "Basement I",
+        "captureType": "pause screen / seed confirmation",
+        "seedVisible": "T1QR ANBY",
+        "observations": [
+          "Pause screen seed is confirmed by user as T1QR ANBY.",
+          "Character is Tainted Azazel per user note.",
+          "Small minimap visible behind pause screen."
+        ]
+      },
+      {
+        "file": "2-Photo-2.jpg",
+        "floor": "basement-1",
+        "floorLabel": "Basement I",
+        "time": "00:02:33",
+        "score": 1547,
+        "captureType": "later floor map",
+        "curse": "Curse of the Blind",
+        "observations": [
+          "Basement I minimap visible.",
+          "Curse of the Blind visible.",
+          "Visible special-room icons include shop/coin-key style icon, boss/skull-style icon, treasure/crown, curse/red icon, and a red secret/special-room style marker.",
+          "Useful for tracing the first-floor shape after seed confirmation."
+        ]
+      }
+    ]
+  }
+]

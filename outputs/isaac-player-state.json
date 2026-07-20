@@ -1,0 +1,86 @@
+{
+  "createdAt": "2026-07-19",
+  "platform": "Nintendo Switch 2",
+  "effectiveRuntime": "Repentance",
+  "profile": "repentance-switch-2",
+  "activeCharacterDefault": "Tainted Keeper",
+  "unlockCompleteness": "partial",
+  "notes": [
+    "User does not have every tainted character unlocked yet.",
+    "Current unlock state may affect item pools, shop options, character availability, and route/item interpretation.",
+    "Room layout observations should be separated from item-pool observations until proven linked."
+  ],
+  "structuredUnlocks": {
+    "taintedCharactersAllUnlocked": false,
+    "detailsKnown": false
+  },
+  "evidence": [
+    {
+      "id": "items-found-pages-2026-07-19-001",
+      "type": "item_collection_pages",
+      "createdAt": "2026-07-19",
+      "source": "user screenshots",
+      "pageOrderSource": "visible page dots on right side",
+      "lockedMarker": "[?]",
+      "notes": "Screenshots show item collection pages. Exact icon-by-icon extraction is deferred; locked items are visibly represented by [?] tiles.",
+      "pages": [
+        {
+          "file": "1-Photo-1.jpg",
+          "selectedItem": "Ocular Rift",
+          "selectedItemDescription": "Stare into the abyss",
+          "visiblePageDot": "first page / top dot selected",
+          "lockedItemsVisible": true
+        },
+        {
+          "file": "2-Photo-2.jpg",
+          "selectedItem": "Crooked Penny",
+          "selectedItemDescription": "50/50",
+          "visiblePageDot": "later page; dot position visible",
+          "lockedItemsVisible": true
+        },
+        {
+          "file": "3-Photo-3.jpg",
+          "selectedItem": "Lost Fly",
+          "selectedItemDescription": "Lost protector",
+          "visiblePageDot": "later page; dot position visible",
+          "lockedItemsVisible": true
+        },
+        {
+          "file": "4-Photo-4.jpg",
+          "selectedItem": "20/20",
+          "selectedItemDescription": "Double shot",
+          "visiblePageDot": "later page; dot position visible",
+          "lockedItemsVisible": true
+        },
+        {
+          "file": "5-Photo-5.jpg",
+          "selectedItem": "Dead Sea Scrolls",
+          "selectedItemDescription": "It's a mystery",
+          "visiblePageDot": "later page; dot position visible",
+          "lockedItemsVisible": false
+        },
+        {
+          "file": "6-Photo-6.jpg",
+          "selectedItem": "The Sad Onion",
+          "selectedItemDescription": "Tears up",
+          "visiblePageDot": "later page; dot position visible",
+          "lockedItemsVisible": false
+        }
+      ]
+    },
+    {
+      "id": "stats-2026-07-19-001",
+      "type": "completion_stats",
+      "createdAt": "2026-07-19",
+      "source": "user screenshot",
+      "file": "7-Photo-7.jpg",
+      "stats": {
+        "deaths": 2403,
+        "items": 641,
+        "momKills": 248,
+        "secrets": 438,
+        "bestStreak": 4
+      }
+    }
+  ]
+}
