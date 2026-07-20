@@ -6,7 +6,7 @@ An early reverse-engineering helper for Binding of Isaac seed/map behavior, focu
 
 ## Current State
 
-This is not a cracked or verified Isaac map generator yet. The HTML page currently uses a deterministic placeholder generator so we can compare seeds, floors, profiles, and observed screenshots in one place while collecting data.
+This is not a cracked or verified Isaac map generator yet. The HTML page currently uses a deterministic placeholder generator so we can compare seeds, floors, platform/runtime environments, and observed screenshots in one place while collecting data.
 
 The useful source of truth is the observation data:
 

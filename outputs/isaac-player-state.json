@@ -1,12 +1,15 @@
 {
   "createdAt": "2026-07-19",
   "platform": "Nintendo Switch 2",
+  "sourceFormat": "Digital + DLC",
+  "entitlementNotes": "User previously used a physical Afterbirth/Afterbirth+ cart, but current play context is digital version plus Repentance DLC. Nintendo may present these as virtual cart-style entitlements.",
   "effectiveRuntime": "Repentance",
   "profile": "repentance-switch-2",
   "activeCharacterDefault": "Tainted Keeper",
   "unlockCompleteness": "partial",
   "notes": [
     "User does not have every tainted character unlocked yet.",
+    "Current observations should not be labeled as physical cart observations unless the user explicitly switches back to cart play.",
     "Current unlock state may affect item pools, shop options, character availability, and route/item interpretation.",
     "Room layout observations should be separated from item-pool observations until proven linked."
   ],

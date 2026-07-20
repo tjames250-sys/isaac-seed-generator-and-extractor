@@ -486,54 +486,42 @@
         <input id="seed" value="GONE SOON" maxlength="12" autocomplete="off" spellcheck="false">
       </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="floor">Floor</label>
-          <select id="floor">
-            <optgroup label="Normal path">
-              <option value="basement-1">Basement I / Cellar I / Burning Basement I</option>
-              <option value="basement-2">Basement II / Cellar II / Burning Basement II</option>
-              <option value="caves-1">Caves I / Catacombs I / Flooded Caves I</option>
-              <option value="caves-2">Caves II / Catacombs II / Flooded Caves II</option>
-              <option value="depths-1">Depths I / Necropolis I / Dank Depths I</option>
-              <option value="depths-2">Depths II / Necropolis II / Dank Depths II</option>
-              <option value="womb-1">Womb I / Utero I / Scarred Womb I</option>
-              <option value="womb-2">Womb II / Utero II / Scarred Womb II</option>
-              <option value="sheol">Sheol</option>
-              <option value="cathedral">Cathedral</option>
-              <option value="dark-room">Dark Room</option>
-              <option value="chest">Chest</option>
-              <option value="void">Void</option>
-            </optgroup>
-            <optgroup label="Repentance alternate path">
-              <option value="downpour-1">Downpour I</option>
-              <option value="downpour-2">Downpour II</option>
-              <option value="dross-1">Dross I</option>
-              <option value="dross-2">Dross II</option>
-              <option value="mines-1">Mines I</option>
-              <option value="mines-2">Mines II</option>
-              <option value="ashpit-1">Ashpit I</option>
-              <option value="ashpit-2">Ashpit II</option>
-              <option value="mausoleum-1">Mausoleum I</option>
-              <option value="mausoleum-2">Mausoleum II</option>
-              <option value="gehenna-1">Gehenna I</option>
-              <option value="gehenna-2">Gehenna II</option>
-              <option value="corpse-1">Corpse I</option>
-              <option value="corpse-2">Corpse II</option>
-              <option value="home">Home</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="field">
-          <label for="profile">Profile</label>
-          <select id="profile">
-            <option value="abp-switch">AB+ Switch</option>
-            <option value="abp-switch-repentance-active">AB+ Switch purchase, Repentance active</option>
-            <option value="repentance-switch">Repentance Switch</option>
-            <option value="repentance-switch-2">Repentance Switch 2</option>
-            <option value="rebirth-pc">Rebirth-like</option>
-          </select>
-        </div>
+      <div class="field">
+        <label for="floor">Floor</label>
+        <select id="floor">
+          <optgroup label="Normal path">
+            <option value="basement-1">Basement I / Cellar I / Burning Basement I</option>
+            <option value="basement-2">Basement II / Cellar II / Burning Basement II</option>
+            <option value="caves-1">Caves I / Catacombs I / Flooded Caves I</option>
+            <option value="caves-2">Caves II / Catacombs II / Flooded Caves II</option>
+            <option value="depths-1">Depths I / Necropolis I / Dank Depths I</option>
+            <option value="depths-2">Depths II / Necropolis II / Dank Depths II</option>
+            <option value="womb-1">Womb I / Utero I / Scarred Womb I</option>
+            <option value="womb-2">Womb II / Utero II / Scarred Womb II</option>
+            <option value="sheol">Sheol</option>
+            <option value="cathedral">Cathedral</option>
+            <option value="dark-room">Dark Room</option>
+            <option value="chest">Chest</option>
+            <option value="void">Void</option>
+          </optgroup>
+          <optgroup label="Repentance alternate path">
+            <option value="downpour-1">Downpour I</option>
+            <option value="downpour-2">Downpour II</option>
+            <option value="dross-1">Dross I</option>
+            <option value="dross-2">Dross II</option>
+            <option value="mines-1">Mines I</option>
+            <option value="mines-2">Mines II</option>
+            <option value="ashpit-1">Ashpit I</option>
+            <option value="ashpit-2">Ashpit II</option>
+            <option value="mausoleum-1">Mausoleum I</option>
+            <option value="mausoleum-2">Mausoleum II</option>
+            <option value="gehenna-1">Gehenna I</option>
+            <option value="gehenna-2">Gehenna II</option>
+            <option value="corpse-1">Corpse I</option>
+            <option value="corpse-2">Corpse II</option>
+            <option value="home">Home</option>
+          </optgroup>
+        </select>
       </div>
 
       <div class="actions">
@@ -551,33 +539,42 @@
       <div class="seed-bank">
         <div class="row">
           <div class="field">
-            <label for="sourcePlatform">Source platform</label>
+            <label for="sourcePlatform">Platform</label>
             <select id="sourcePlatform">
               <option value="Unknown">Unknown</option>
               <option value="PC">PC</option>
               <option value="Nintendo Switch">Nintendo Switch</option>
-              <option value="Nintendo Switch 2">Nintendo Switch 2</option>
+              <option value="Nintendo Switch 2" selected>Nintendo Switch 2</option>
               <option value="PlayStation">PlayStation</option>
               <option value="Xbox">Xbox</option>
               <option value="iOS">iOS</option>
             </select>
           </div>
           <div class="field">
-            <label for="sourceVersion">Source version</label>
+            <label for="sourceVersion">Version / runtime</label>
             <select id="sourceVersion">
               <option value="Unknown">Unknown</option>
               <option value="Rebirth">Rebirth</option>
               <option value="Afterbirth">Afterbirth</option>
               <option value="Afterbirth+">Afterbirth+</option>
               <option value="Afterbirth+ purchase, Repentance active">Afterbirth+ purchase, Repentance active</option>
-              <option value="Repentance">Repentance</option>
+              <option value="Repentance" selected>Repentance</option>
               <option value="Repentance+">Repentance+ (PC / Switch 2 source)</option>
             </select>
           </div>
         </div>
         <div class="field">
+          <label for="sourceFormat">Source format</label>
+          <select id="sourceFormat">
+            <option value="Digital + DLC" selected>Digital + DLC</option>
+            <option value="Virtual cart / digital entitlement">Virtual cart / digital entitlement</option>
+            <option value="Physical cart">Physical cart</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+        </div>
+        <div class="field">
           <label for="sourceRelease">Source / release note</label>
-          <input id="sourceRelease" placeholder="Steam thread, Switch cart, v1.7.9b, unknown">
+          <input id="sourceRelease" placeholder="Digital Switch 2 + Repentance DLC, Steam thread, v1.7.9b, unknown">
         </div>
         <div class="field">
           <label for="sourceText">Forum seed paste</label>
@@ -623,7 +620,7 @@
           </div>
           <div class="field">
             <label for="observationSource">Observed on</label>
-            <input id="observationSource" placeholder="Switch AB+ cart, screenshot, Steam post">
+            <input id="observationSource" placeholder="Switch digital + Repentance DLC, screenshot, Steam post">
           </div>
         </div>
         <div class="row">
@@ -797,7 +794,6 @@
 
     const seedInput = document.querySelector("#seed");
     const floorInput = document.querySelector("#floor");
-    const profileInput = document.querySelector("#profile");
     const mapEl = document.querySelector("#map");
     const normEl = document.querySelector("#norm");
     const hashEl = document.querySelector("#hash");
@@ -805,6 +801,7 @@
     const farthestEl = document.querySelector("#farthest");
     const sourcePlatformEl = document.querySelector("#sourcePlatform");
     const sourceVersionEl = document.querySelector("#sourceVersion");
+    const sourceFormatEl = document.querySelector("#sourceFormat");
     const sourceReleaseEl = document.querySelector("#sourceRelease");
     const sourceTextEl = document.querySelector("#sourceText");
     const seedListEl = document.querySelector("#seedList");
@@ -867,6 +864,7 @@
       return [
         record.platform,
         record.version,
+        record.format || record.sourceFormat,
         record.release
       ].filter(value => value && value !== "Unknown").join(" | ") || "Source unknown";
     }
@@ -881,6 +879,33 @@
 
     function profileSupportsFloor(profile, floor) {
       return profile.supports.includes(floor.requires);
+    }
+
+    function inferProfileName(platform, version) {
+      if (platform === "Nintendo Switch 2" && (version === "Repentance" || version === "Repentance+")) {
+        return "repentance-switch-2";
+      }
+      if (platform === "Nintendo Switch" && version === "Repentance") {
+        return "repentance-switch";
+      }
+      if (platform === "Nintendo Switch" && version === "Afterbirth+ purchase, Repentance active") {
+        return "abp-switch-repentance-active";
+      }
+      if (platform === "Nintendo Switch" && version === "Afterbirth+") {
+        return "abp-switch";
+      }
+      if (version === "Rebirth") {
+        return "rebirth-pc";
+      }
+      return "repentance-switch-2";
+    }
+
+    function currentProfileName() {
+      return inferProfileName(sourcePlatformEl.value, sourceVersionEl.value);
+    }
+
+    function currentProfile() {
+      return generationProfiles[currentProfileName()];
     }
 
     function loadObservations() {
@@ -938,17 +963,19 @@
 
     function currentObservationRecord() {
       const normalized = normalizeSeed(seedInput.value) || "0";
-      const profile = generationProfiles[profileInput.value];
+      const profileName = currentProfileName();
+      const profile = currentProfile();
       const floor = floorDefinitions[floorInput.value];
       return {
         id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         createdAt: new Date().toISOString(),
         seed: displaySeed(normalized),
         normalizedSeed: normalized,
-        profile: profileInput.value,
+        profile: profileName,
         profileLabel: profile.label,
-        platform: profile.platform,
-        version: profile.version,
+        platform: sourcePlatformEl.value,
+        version: sourceVersionEl.value,
+        sourceFormat: sourceFormatEl.value,
         entitlement: profile.entitlement,
         effectiveRuntime: profile.effectiveRuntime,
         floor: floorInput.value,
@@ -1005,10 +1032,11 @@
       const existing = new Set(importedSeeds.map(record => record.seed));
       const platform = sourcePlatformEl.value;
       const version = sourceVersionEl.value;
+      const format = sourceFormatEl.value;
       const release = sourceReleaseEl.value.trim() || "Unknown";
       for (const seed of seeds) {
         if (!existing.has(seed)) {
-          importedSeeds.push({ seed, platform, version, release });
+          importedSeeds.push({ seed, platform, version, format, release });
           existing.add(seed);
         }
       }
@@ -1233,7 +1261,7 @@
         const item = document.createElement("div");
         item.className = "match-item";
         const text = document.createElement("span");
-        text.textContent = "Load isaac-seed-observations.json to compare the current seed/profile/floor against captured evidence.";
+        text.textContent = "Load isaac-seed-observations.json to compare the current seed/environment/floor against captured evidence.";
         item.append(text);
         matchListEl.append(item);
         return;
@@ -1241,8 +1269,8 @@
 
       const normalized = normalizeSeed(seedInput.value) || "0";
       const floorId = floorInput.value;
-      const profileName = profileInput.value;
-      const profile = generationProfiles[profileName];
+      const profileName = currentProfileName();
+      const profile = currentProfile();
       const matches = matcherObservations
         .filter(record => normalizeSeed(record.normalizedSeed || record.seed || "") === normalized)
         .filter(record => recordProfileMatches(record, profileName, profile))
@@ -1252,7 +1280,7 @@
         }))
         .filter(match => match.evidence.length);
 
-      matcherStatusEl.textContent = `${matcherObservations.length} matcher observation${matcherObservations.length === 1 ? "" : "s"} loaded; ${matches.length} relevant to this seed/profile/floor.`;
+      matcherStatusEl.textContent = `${matcherObservations.length} matcher observation${matcherObservations.length === 1 ? "" : "s"} loaded; ${matches.length} relevant to this seed/environment/floor.`;
 
       if (!matches.length) {
         const item = document.createElement("div");
@@ -1438,7 +1466,7 @@
     function render() {
       const normalized = normalizeSeed(seedInput.value) || "0";
       const floorId = floorInput.value;
-      const profileName = profileInput.value;
+      const profileName = currentProfileName();
       const generated = buildFloor(normalized, floorId, profileName);
       lastGenerated = generated;
       const { rooms, profile, floor } = generated;
@@ -1502,7 +1530,7 @@
       const warnings = [];
 
       if (!profileSupportsFloor(profile, floor)) {
-        warnings.push(`${floor.label} requires ${floor.requires}, but the current profile is ${profile.label}.`);
+        warnings.push(`${floor.label} requires ${floor.requires}, but the current environment is ${profile.label}.`);
       }
 
       if (!activeImportedSeed || activeImportedSeed.seed !== normalized) {
@@ -1609,7 +1637,9 @@
       render();
     });
     floorInput.addEventListener("change", render);
-    profileInput.addEventListener("change", render);
+    sourcePlatformEl.addEventListener("change", render);
+    sourceVersionEl.addEventListener("change", render);
+    sourceFormatEl.addEventListener("change", render);
 
     renderSeedBank();
     renderObservations();
