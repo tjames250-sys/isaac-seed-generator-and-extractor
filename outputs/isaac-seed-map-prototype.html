@@ -460,7 +460,7 @@
 
     .start-row {
       display: grid;
-      grid-template-columns: 42px 1fr 1fr 1fr;
+      grid-template-columns: 42px 1fr;
       gap: 6px;
       align-items: end;
     }
@@ -523,12 +523,16 @@
           <optgroup label="Normal path">
             <option value="basement-1">Basement I / Cellar I / Burning Basement I</option>
             <option value="basement-2">Basement II / Cellar II / Burning Basement II</option>
+            <option value="basement-xl">Basement XL / Cellar XL / Burning Basement XL</option>
             <option value="caves-1">Caves I / Catacombs I / Flooded Caves I</option>
             <option value="caves-2">Caves II / Catacombs II / Flooded Caves II</option>
+            <option value="caves-xl">Caves XL / Catacombs XL / Flooded Caves XL</option>
             <option value="depths-1">Depths I / Necropolis I / Dank Depths I</option>
             <option value="depths-2">Depths II / Necropolis II / Dank Depths II</option>
+            <option value="depths-xl">Depths XL / Necropolis XL / Dank Depths XL</option>
             <option value="womb-1">Womb I / Utero I / Scarred Womb I</option>
             <option value="womb-2">Womb II / Utero II / Scarred Womb II</option>
+            <option value="womb-xl">Womb XL / Utero XL / Scarred Womb XL</option>
             <option value="sheol">Sheol</option>
             <option value="cathedral">Cathedral</option>
             <option value="dark-room">Dark Room</option>
@@ -557,7 +561,7 @@
 
       <div class="actions">
         <button class="primary" id="generate">Generate</button>
-        <button id="random" title="Random seed">↻</button>
+        <button id="random" title="Random seed">Reroll</button>
       </div>
 
       <div class="facts">
@@ -600,6 +604,16 @@
             <option value="Digital + DLC" selected>Digital + DLC</option>
             <option value="Virtual cart / digital entitlement">Virtual cart / digital entitlement</option>
             <option value="Physical cart">Physical cart</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="sourceDifficulty">Difficulty</label>
+          <select id="sourceDifficulty">
+            <option value="Hard" selected>Hard mode</option>
+            <option value="Normal">Normal mode</option>
+            <option value="Greed">Greed</option>
+            <option value="Greedier">Greedier</option>
             <option value="Unknown">Unknown</option>
           </select>
         </div>
@@ -670,6 +684,25 @@
         </div>
         <div class="field">
           <label>Start-room correction</label>
+          <select id="startMapPreset">
+            <option value="unknown" selected>Starting map unknown</option>
+            <option value="n">North only</option>
+            <option value="e">East only</option>
+            <option value="s">South only</option>
+            <option value="w">West only</option>
+            <option value="ns">North + south</option>
+            <option value="ew">East + west</option>
+            <option value="ne">North + east</option>
+            <option value="es">East + south</option>
+            <option value="sw">South + west</option>
+            <option value="nw">North + west</option>
+            <option value="nes">North + east + south</option>
+            <option value="esw">East + south + west</option>
+            <option value="nsw">North + south + west</option>
+            <option value="new">North + east + west</option>
+            <option value="nesw">All four directions</option>
+            <option value="custom">Custom</option>
+          </select>
           <div class="start-helper" id="startRoomHelper">
             <div class="start-row" data-direction="north">
               <strong>N</strong>
@@ -853,12 +886,16 @@
     const floorDefinitions = {
       "basement-1": { label: "Basement I / Cellar I / Burning Basement I", chapter: 1, family: "basement", requires: "Rebirth" },
       "basement-2": { label: "Basement II / Cellar II / Burning Basement II", chapter: 2, family: "basement", requires: "Rebirth" },
+      "basement-xl": { label: "Basement XL / Cellar XL / Burning Basement XL", chapter: 2, family: "basement", requires: "Rebirth", xl: true },
       "caves-1": { label: "Caves I / Catacombs I / Flooded Caves I", chapter: 3, family: "caves", requires: "Rebirth" },
       "caves-2": { label: "Caves II / Catacombs II / Flooded Caves II", chapter: 4, family: "caves", requires: "Rebirth" },
+      "caves-xl": { label: "Caves XL / Catacombs XL / Flooded Caves XL", chapter: 4, family: "caves", requires: "Rebirth", xl: true },
       "depths-1": { label: "Depths I / Necropolis I / Dank Depths I", chapter: 5, family: "depths", requires: "Rebirth" },
       "depths-2": { label: "Depths II / Necropolis II / Dank Depths II", chapter: 6, family: "depths", requires: "Rebirth" },
+      "depths-xl": { label: "Depths XL / Necropolis XL / Dank Depths XL", chapter: 6, family: "depths", requires: "Rebirth", xl: true },
       "womb-1": { label: "Womb I / Utero I / Scarred Womb I", chapter: 7, family: "womb", requires: "Rebirth" },
       "womb-2": { label: "Womb II / Utero II / Scarred Womb II", chapter: 8, family: "womb", requires: "Rebirth" },
+      "womb-xl": { label: "Womb XL / Utero XL / Scarred Womb XL", chapter: 8, family: "womb", requires: "Rebirth", xl: true },
       "sheol": { label: "Sheol", chapter: 9, family: "final", requires: "Rebirth" },
       "cathedral": { label: "Cathedral", chapter: 9, family: "final", requires: "Rebirth" },
       "dark-room": { label: "Dark Room", chapter: 10, family: "chest", requires: "Rebirth" },
@@ -974,6 +1011,7 @@
     const sourcePlatformEl = document.querySelector("#sourcePlatform");
     const sourceVersionEl = document.querySelector("#sourceVersion");
     const sourceFormatEl = document.querySelector("#sourceFormat");
+    const sourceDifficultyEl = document.querySelector("#sourceDifficulty");
     const sourceReleaseEl = document.querySelector("#sourceRelease");
     const sourceTextEl = document.querySelector("#sourceText");
     const seedListEl = document.querySelector("#seedList");
@@ -984,6 +1022,7 @@
     const observationCharacterInput = document.querySelector("#observationCharacter");
     const unlockProfileInput = document.querySelector("#unlockProfile");
     const unlockNotesInput = document.querySelector("#unlockNotes");
+    const startMapPresetInput = document.querySelector("#startMapPreset");
     const startRoomHelperEl = document.querySelector("#startRoomHelper");
     const observationNotesInput = document.querySelector("#observationNotes");
     const observationStatusTextEl = document.querySelector("#observationStatusText");
@@ -1039,6 +1078,7 @@
         record.platform,
         record.version,
         record.format || record.sourceFormat,
+        record.difficulty,
         record.release
       ].filter(value => value && value !== "Unknown").join(" | ") || "Source unknown";
     }
@@ -1146,6 +1186,7 @@
       const profile = currentProfile();
       const floor = floorDefinitions[floorInput.value];
       const startRoomConstraints = readStartRoomConstraints();
+      const startMapPreset = startMapPresetInput.value;
       const record = {
         id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
         createdAt: new Date().toISOString(),
@@ -1156,6 +1197,8 @@
         platform: sourcePlatformEl.value,
         version: sourceVersionEl.value,
         sourceFormat: sourceFormatEl.value,
+        difficulty: sourceDifficultyEl.value,
+        hardMode: sourceDifficultyEl.value === "Hard",
         entitlement: profile.entitlement,
         effectiveRuntime: profile.effectiveRuntime,
         floor: floorInput.value,
@@ -1173,6 +1216,9 @@
       };
       if (startRoomConstraints) {
         record.constraints = { startRoom: startRoomConstraints };
+        if (startMapPreset && !["unknown", "custom"].includes(startMapPreset)) {
+          record.constraints.startMapPreset = startMapPreset;
+        }
       }
       return record;
     }
@@ -1181,6 +1227,13 @@
       const constraints = {};
       for (const row of startRoomHelperEl.querySelectorAll(".start-row")) {
         const direction = row.dataset.direction;
+        const summary = row.querySelector('[data-field="summary"]');
+        if (summary) {
+          const value = startRoomChoiceToConstraint(summary.value);
+          if (value) constraints[direction] = value;
+          continue;
+        }
+
         const presence = row.querySelector('[data-field="presence"]').value;
         if (presence === "unknown") continue;
 
@@ -1192,6 +1245,110 @@
         constraints[direction] = value;
       }
       return Object.keys(constraints).length ? constraints : null;
+    }
+
+    function startRoomChoiceToConstraint(choice) {
+      const values = {
+        missing: { exists: false },
+        exists: { exists: true },
+        normal: { exists: true, type: "normal" },
+        curse: { exists: true, type: "curse" },
+        library: { exists: true, type: "library" },
+        treasure: { exists: true, type: "treasure" },
+        shop: { exists: true, type: "shop" },
+        boss: { exists: true, type: "boss" },
+        secret: { exists: true, type: "secret" },
+        special: { exists: true, type: "special" },
+        long: { exists: true, shape: "long" },
+        "2x2": { exists: true, shape: "2x2" },
+        L: { exists: true, shape: "L" },
+        "small/odd": { exists: true, shape: "small/odd" }
+      };
+      return values[choice] ? { ...values[choice] } : null;
+    }
+
+    function startRoomOptionLabel(choice) {
+      const labels = {
+        unknown: "Unknown",
+        missing: "No room",
+        exists: "Room",
+        normal: "Normal room",
+        curse: "Curse room",
+        library: "Library",
+        treasure: "Treasure room",
+        shop: "Shop",
+        boss: "Boss",
+        secret: "Secret room",
+        special: "Special/odd room",
+        long: "Long room",
+        "2x2": "2x2 room",
+        L: "L-shaped room",
+        "small/odd": "Small/tiny room"
+      };
+      return labels[choice] || choice;
+    }
+
+    function initializeStartRoomDropdowns() {
+      const choices = [
+        "unknown",
+        "missing",
+        "exists",
+        "normal",
+        "curse",
+        "library",
+        "treasure",
+        "shop",
+        "boss",
+        "secret",
+        "special",
+        "long",
+        "2x2",
+        "L",
+        "small/odd"
+      ];
+      const directionLabels = { north: "North", east: "East", south: "South", west: "West" };
+      for (const row of startRoomHelperEl.querySelectorAll(".start-row")) {
+        const direction = row.dataset.direction;
+        const select = document.createElement("select");
+        select.dataset.field = "summary";
+        for (const choice of choices) {
+          const option = document.createElement("option");
+          option.value = choice;
+          option.textContent = startRoomOptionLabel(choice);
+          select.append(option);
+        }
+
+        const label = document.createElement("label");
+        label.textContent = directionLabels[direction] || direction;
+        label.append(select);
+        select.addEventListener("change", () => {
+          startMapPresetInput.value = "custom";
+        });
+
+        const marker = document.createElement("strong");
+        marker.textContent = (directionLabels[direction] || direction).slice(0, 1);
+        row.replaceChildren(marker, label);
+      }
+    }
+
+    function setStartRoomChoice(direction, choice) {
+      const row = startRoomHelperEl.querySelector(`.start-row[data-direction="${direction}"]`);
+      const summary = row && row.querySelector('[data-field="summary"]');
+      if (summary) summary.value = choice;
+    }
+
+    function applyStartMapPreset(preset) {
+      const directions = ["north", "east", "south", "west"];
+      if (preset === "custom") return;
+      if (preset === "unknown") {
+        for (const direction of directions) setStartRoomChoice(direction, "unknown");
+        return;
+      }
+
+      const codes = { north: "n", east: "e", south: "s", west: "w" };
+      for (const direction of directions) {
+        setStartRoomChoice(direction, preset.includes(codes[direction]) ? "exists" : "missing");
+      }
     }
 
     function startRoomSummary() {
@@ -1206,7 +1363,13 @@
     }
 
     function clearStartRoomHelper() {
+      startMapPresetInput.value = "unknown";
       for (const row of startRoomHelperEl.querySelectorAll(".start-row")) {
+        const summary = row.querySelector('[data-field="summary"]');
+        if (summary) {
+          summary.value = "unknown";
+          continue;
+        }
         row.querySelector('[data-field="presence"]').value = "unknown";
         row.querySelector('[data-field="type"]').value = "unknown";
         row.querySelector('[data-field="shape"]').value = "unknown";
@@ -1253,10 +1416,11 @@
       const platform = sourcePlatformEl.value;
       const version = sourceVersionEl.value;
       const format = sourceFormatEl.value;
+      const difficulty = sourceDifficultyEl.value;
       const release = sourceReleaseEl.value.trim() || "Unknown";
       for (const seed of seeds) {
         if (!existing.has(seed)) {
-          importedSeeds.push({ seed, platform, version, format, release });
+          importedSeeds.push({ seed, platform, version, format, difficulty, release });
           existing.add(seed);
         }
       }
@@ -1310,6 +1474,7 @@
         "cellar-2": "basement-2",
         "burning-basement-1": "basement-1",
         "burning-basement-2": "basement-2",
+        "burning-basement-xl": "basement-xl",
         "catacombs-1": "caves-1",
         "catacombs-2": "caves-2",
         "flooded-caves-1": "caves-1",
@@ -1318,10 +1483,13 @@
         "necropolis-2": "depths-2",
         "dank-depths-1": "depths-1",
         "dank-depths-2": "depths-2",
+        "dank-depths-xl": "depths-xl",
         "utero-1": "womb-1",
         "utero-2": "womb-2",
+        "utero-xl": "womb-xl",
         "scarred-womb-1": "womb-1",
         "scarred-womb-2": "womb-2",
+        "scarred-womb-xl": "womb-xl",
         "flooded-caves-xl": "caves-xl",
         "unknown-cave": "caves-unknown",
         "unknown": "unknown"
@@ -1612,7 +1780,7 @@
       const profile = generationProfiles[profileName];
       const floor = floorDefinitions[floorId];
       const tuning = floorFamilyTuning[floor.family] ?? floorFamilyTuning.basement;
-      const seedNumber = fnv1a(`${profileName}:${floorId}:${seedText}`);
+      const seedNumber = fnv1a(`${profileName}:${sourceDifficultyEl.value}:${floorId}:${seedText}`);
       const rng = makeRng(seedNumber);
       const rooms = new Map();
       const center = Math.floor(profile.grid / 2);
@@ -1878,7 +2046,10 @@
     sourcePlatformEl.addEventListener("change", render);
     sourceVersionEl.addEventListener("change", render);
     sourceFormatEl.addEventListener("change", render);
+    sourceDifficultyEl.addEventListener("change", render);
 
+    initializeStartRoomDropdowns();
+    startMapPresetInput.addEventListener("change", () => applyStartMapPreset(startMapPresetInput.value));
     renderSeedBank();
     renderObservations();
     render();

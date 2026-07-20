@@ -8,6 +8,8 @@
     "version": "Repentance",
     "effectiveRuntime": "Repentance",
     "profile": "repentance-switch-2",
+    "difficulty": "Hard",
+    "hardMode": true,
     "character": "Tainted Keeper",
     "floor": "unknown",
     "floorLabel": "Unknown",
@@ -44,6 +46,8 @@
     "version": "Repentance",
     "effectiveRuntime": "Repentance",
     "profile": "repentance-switch-2",
+    "difficulty": "Hard",
+    "hardMode": true,
     "character": "Tainted Keeper",
     "status": "partial",
     "source": "user screenshot set after run death",
@@ -110,6 +114,8 @@
     "version": "Repentance",
     "effectiveRuntime": "Repentance",
     "profile": "repentance-switch-2",
+    "difficulty": "Hard",
+    "hardMode": true,
     "character": "Tainted Keeper",
     "status": "partial",
     "source": "user screenshot set after run death",
@@ -312,6 +318,8 @@
     "version": "Repentance",
     "effectiveRuntime": "Repentance",
     "profile": "repentance-switch-2",
+    "difficulty": "Hard",
+    "hardMode": true,
     "character": "Tainted Keeper",
     "status": "partial",
     "source": "user screenshot set after run death",
@@ -409,6 +417,8 @@
     "version": "Repentance",
     "effectiveRuntime": "Repentance",
     "profile": "repentance-switch-2",
+    "difficulty": "Hard",
+    "hardMode": true,
     "character": "Tainted Azazel",
     "status": "partial",
     "source": "user screenshot pair",
@@ -439,6 +449,93 @@
           "Curse of the Blind visible.",
           "Visible special-room icons include shop/coin-key style icon, boss/skull-style icon, treasure/crown, curse/red icon, and a red secret/special-room style marker.",
           "Useful for tracing the first-floor shape after seed confirmation."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "obs-y6gnqvqm-lost-hard-burning-basement-xl-001",
+    "createdAt": "2026-07-19",
+    "seed": "Y6GN QVQM",
+    "normalizedSeed": "Y6GNQVQM",
+    "seedReadNotes": "Seed read from pause screen as Y6GN QVQM.",
+    "seedReadConfidence": "visual read",
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "sourceFormat": "Digital + DLC",
+    "difficulty": "Hard",
+    "hardMode": true,
+    "character": "The Lost",
+    "status": "partial",
+    "source": "user screenshot set",
+    "notes": "User is attempting to unlock Tainted Lost and notes they are playing Hard mode, which may affect seed generation. Screenshots show Burning Basement XL with Curse of the Labyrinth. Treat this as partial map evidence until the full XL floor is traced.",
+    "floor": "burning-basement-xl",
+    "floorLabel": "Burning Basement XL",
+    "curse": "Curse of the Labyrinth",
+    "constraints": {
+      "startMapPreset": "esw",
+      "startRoom": {
+        "north": {
+          "exists": false
+        },
+        "east": {
+          "exists": true,
+          "type": "curse"
+        },
+        "south": {
+          "exists": true
+        },
+        "west": {
+          "exists": true,
+          "shape": "2x2"
+        }
+      }
+    },
+    "screenshots": [
+      {
+        "file": "1-Photo-1.jpg",
+        "attachmentFolder": "05EAB201-21AA-4CF5-AA2D-9ED8E3E1FCAD",
+        "floor": "burning-basement-xl",
+        "floorLabel": "Burning Basement XL",
+        "captureType": "pause screen / seed confirmation",
+        "seedVisible": "Y6GN QVQM",
+        "observations": [
+          "Pause screen seed appears to read Y6GN QVQM.",
+          "Character appears to be The Lost.",
+          "Small minimap visible behind pause screen."
+        ]
+      },
+      {
+        "file": "2-Photo-2.jpg",
+        "attachmentFolder": "05EAB201-21AA-4CF5-AA2D-9ED8E3E1FCAD",
+        "floor": "burning-basement-xl",
+        "floorLabel": "Burning Basement XL",
+        "time": "00:00:07",
+        "score": 515,
+        "captureType": "floor entry / start-room anchor",
+        "curse": "Curse of the Labyrinth",
+        "observations": [
+          "Burning Basement XL title and Curse of the Labyrinth are visible.",
+          "Start room minimap shows no north room, curse room to the east, normal room to the south, and a larger room to the west.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "3-Photo-3.jpg",
+        "attachmentFolder": "05EAB201-21AA-4CF5-AA2D-9ED8E3E1FCAD",
+        "floor": "burning-basement-xl",
+        "floorLabel": "Burning Basement XL",
+        "time": "00:02:34",
+        "score": 1229,
+        "captureType": "later floor map",
+        "curse": "Curse of the Labyrinth",
+        "caption": "Mother is watching you",
+        "observations": [
+          "Later Burning Basement XL minimap has more explored rooms.",
+          "Visible special-room icons include curse/red icon, treasure/crown, shop/coin-key style icon, and boss/skull-style icon.",
+          "Useful for tracing a partial XL floor shape."
         ]
       }
     ]
