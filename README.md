@@ -1,5 +1,7 @@
 # Isaac Seed Map Prototype
 
+Repository: `isaac-seed-generator-and-extractor`
+
 An early reverse-engineering helper for Binding of Isaac seed/map behavior, focused on Nintendo Switch 2 Repentance observations.
 
 ## Current State
