@@ -650,7 +650,7 @@
           <div class="field">
             <label for="sourcePlatform">Platform</label>
             <select id="sourcePlatform">
-              <option value="Unknown">Unknown</option>
+              <option value="Unknown" selected>Unknown</option>
               <option value="PC">PC</option>
               <option value="Nintendo Switch">Nintendo Switch</option>
               <option value="Nintendo Switch 2" selected>Nintendo Switch 2</option>
@@ -745,7 +745,47 @@
         <div class="row">
           <div class="field">
             <label for="observationCharacter">Character</label>
-            <input id="observationCharacter" value="Tainted Keeper" placeholder="Tainted Keeper, Tainted Azazel">
+            <select id="observationCharacter">
+              <option value="Unknown">Unknown</option>
+              <optgroup label="Characters">
+                <option value="Isaac">Isaac</option>
+                <option value="Magdalene">Magdalene</option>
+                <option value="Cain">Cain</option>
+                <option value="Judas">Judas</option>
+                <option value="Blue Baby">??? (Blue Baby)</option>
+                <option value="Eve">Eve</option>
+                <option value="Samson">Samson</option>
+                <option value="Azazel">Azazel</option>
+                <option value="Lazarus">Lazarus</option>
+                <option value="Eden">Eden</option>
+                <option value="The Lost">The Lost</option>
+                <option value="Lilith">Lilith</option>
+                <option value="Keeper">Keeper</option>
+                <option value="Apollyon">Apollyon</option>
+                <option value="The Forgotten">The Forgotten</option>
+                <option value="Bethany">Bethany</option>
+                <option value="Jacob and Esau">Jacob and Esau</option>
+              </optgroup>
+              <optgroup label="Tainted characters">
+                <option value="Tainted Isaac">Tainted Isaac</option>
+                <option value="Tainted Magdalene">Tainted Magdalene</option>
+                <option value="Tainted Cain">Tainted Cain</option>
+                <option value="Tainted Judas">Tainted Judas</option>
+                <option value="Tainted Blue Baby">Tainted Blue Baby</option>
+                <option value="Tainted Eve">Tainted Eve</option>
+                <option value="Tainted Samson">Tainted Samson</option>
+                <option value="Tainted Azazel">Tainted Azazel</option>
+                <option value="Tainted Lazarus">Tainted Lazarus</option>
+                <option value="Tainted Eden">Tainted Eden</option>
+                <option value="Tainted Lost">Tainted Lost</option>
+                <option value="Tainted Lilith">Tainted Lilith</option>
+                <option value="Tainted Keeper">Tainted Keeper</option>
+                <option value="Tainted Apollyon">Tainted Apollyon</option>
+                <option value="Tainted Forgotten">Tainted Forgotten</option>
+                <option value="Tainted Bethany">Tainted Bethany</option>
+                <option value="Tainted Jacob">Tainted Jacob</option>
+              </optgroup>
+            </select>
           </div>
           <div class="field">
             <label for="unlockProfile">Unlock profile</label>
@@ -1168,6 +1208,15 @@
     let lastGenerated = null;
     let observedMap = new Map();
     let selectedObservedCell = "";
+
+    try {
+      const savedCharacter = localStorage.getItem("isaacObservationCharacter");
+      if (savedCharacter && [...observationCharacterInput.options].some(option => option.value === savedCharacter)) {
+        observationCharacterInput.value = savedCharacter;
+      }
+    } catch {
+      // Local files and privacy modes may block browser storage.
+    }
 
     function normalizeSeed(value) {
       return value.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -2349,6 +2398,13 @@
       observedMap = new Map();
       selectedObservedCell = "";
       render();
+    });
+    observationCharacterInput.addEventListener("change", () => {
+      try {
+        localStorage.setItem("isaacObservationCharacter", observationCharacterInput.value);
+      } catch {
+        // Character selection still works for the current session.
+      }
     });
 
     initializeStartRoomDropdowns();

@@ -539,5 +539,108 @@
         ]
       }
     ]
+  },
+  {
+    "id": "obs-shfjrz93-lost-hard-run-001",
+    "createdAt": "2026-07-19",
+    "seed": "SHFJ RZ93",
+    "normalizedSeed": "SHFJRZ93",
+    "seedReadNotes": "Seed is clearly visible as SHFJ RZ93 on both the pause screen and death note.",
+    "seedReadConfidence": "screenshot-confirmed",
+    "platform": "Nintendo Switch 2",
+    "version": "Repentance",
+    "effectiveRuntime": "Repentance",
+    "profile": "repentance-switch-2",
+    "sourceFormat": "Digital + DLC",
+    "difficulty": "Hard",
+    "hardMode": true,
+    "character": "The Lost",
+    "status": "partial",
+    "source": "user screenshot set",
+    "notes": "The Lost run on Hard mode. The run ended on Flooded Caves I. Character is retained as a matching variable, but is not yet assumed to alter floor geometry.",
+    "screenshots": [
+      {
+        "file": "1-Photo-1.jpg",
+        "attachmentFolder": "56BC786A-742F-4C33-AF3D-020C42BB55BA",
+        "floor": "basement-1",
+        "floorLabel": "Basement I",
+        "captureType": "pause screen / seed confirmation",
+        "seedVisible": "SHFJ RZ93",
+        "observations": [
+          "Pause screen clearly confirms seed SHFJ RZ93.",
+          "Character is The Lost.",
+          "Hard-mode blood treatment is visible on the completion-note paper.",
+          "Small early-floor minimap is visible behind the pause screen."
+        ]
+      },
+      {
+        "file": "2-Photo-2.jpg",
+        "attachmentFolder": "56BC786A-742F-4C33-AF3D-020C42BB55BA",
+        "floor": "basement-1",
+        "floorLabel": "Basement I",
+        "time": "00:03:22",
+        "score": 1014,
+        "captureType": "later floor map",
+        "observations": [
+          "Expanded Basement I minimap is visible.",
+          "Visible special-room icons include boss, treasure, shop, and curse-room markers.",
+          "Useful for tracing the first-floor shape."
+        ]
+      },
+      {
+        "file": "3-Photo-3.jpg",
+        "attachmentFolder": "56BC786A-742F-4C33-AF3D-020C42BB55BA",
+        "floor": "cellar-2",
+        "floorLabel": "Cellar II",
+        "time": "00:03:30",
+        "score": 1495,
+        "captureType": "floor entry",
+        "observations": [
+          "Cellar II entry screenshot with a small start-area minimap.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "4-Photo-4.jpg",
+        "attachmentFolder": "56BC786A-742F-4C33-AF3D-020C42BB55BA",
+        "floor": "cellar-2",
+        "floorLabel": "Cellar II",
+        "captureType": "later floor map",
+        "caption": "Purity",
+        "observations": [
+          "Expanded Cellar II minimap is visible.",
+          "Visible special-room icons include treasure, boss, shop, and two special-room markers.",
+          "Useful for tracing the second-floor shape."
+        ]
+      },
+      {
+        "file": "5-Photo-5.jpg",
+        "attachmentFolder": "56BC786A-742F-4C33-AF3D-020C42BB55BA",
+        "floor": "flooded-caves-1",
+        "floorLabel": "Flooded Caves I",
+        "time": "00:07:25",
+        "score": 3235,
+        "captureType": "floor entry",
+        "caption": "Purity",
+        "observations": [
+          "Flooded Caves I entry screenshot with a small start-area minimap.",
+          "Treasure-room marker is visible east of the start cluster.",
+          "Good for start-room anchoring."
+        ]
+      },
+      {
+        "file": "6-Photo-6.jpg",
+        "attachmentFolder": "56BC786A-742F-4C33-AF3D-020C42BB55BA",
+        "floor": "flooded-caves-1",
+        "floorLabel": "Flooded Caves I",
+        "captureType": "death screen / seed confirmation",
+        "seedVisible": "SHFJ RZ93",
+        "observations": [
+          "Death note independently confirms seed SHFJ RZ93.",
+          "Run ended in a cave on Flooded Caves I.",
+          "A more explored minimap remains visible behind the death note and can be traced as partial evidence."
+        ]
+      }
+    ]
   }
 ]

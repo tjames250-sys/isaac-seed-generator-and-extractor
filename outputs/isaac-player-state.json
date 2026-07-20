@@ -7,7 +7,7 @@
   "profile": "repentance-switch-2",
   "defaultDifficulty": "Hard",
   "hardModeDefault": true,
-  "activeCharacterDefault": "Tainted Keeper",
+  "activeCharacterDefault": "The Lost",
   "unlockCompleteness": "partial",
   "notes": [
     "User does not have every tainted character unlocked yet.",
@@ -15,7 +15,8 @@
     "User reports every captured run so far was played in Hard mode.",
     "Visual difficulty cue: blood/red treatment on the character paper/completion-note UI supports a Hard-mode read; Greedier can also be identified by its red-stained coin HUD cue.",
     "Current unlock state may affect item pools, shop options, character availability, and route/item interpretation.",
-    "Room layout observations should be separated from item-pool observations until proven linked."
+    "Room layout observations should be separated from item-pool observations until proven linked.",
+    "Character should be recorded for every run. Treat it as a possible item/content divergence variable, but do not include it in the room-geometry hash until repeated same-seed comparisons show a layout difference."
   ],
   "structuredUnlocks": {
     "taintedCharactersAllUnlocked": false,
