@@ -454,11 +454,11 @@
     ]
   },
   {
-    "id": "obs-y6gnqvqm-lost-hard-burning-basement-xl-001",
+    "id": "obs-y6gnqnqm-lost-hard-burning-basement-xl-001",
     "createdAt": "2026-07-19",
-    "seed": "Y6GN QVQM",
-    "normalizedSeed": "Y6GNQVQM",
-    "seedReadNotes": "Seed read from pause screen as Y6GN QVQM.",
+    "seed": "Y6GN QNQM",
+    "normalizedSeed": "Y6GNQNQM",
+    "seedReadNotes": "Seed corrected by user to Y6GN QNQM. Earlier visual read Y6GN QVQM was incorrect.",
     "seedReadConfidence": "visual read",
     "platform": "Nintendo Switch 2",
     "version": "Repentance",
@@ -500,9 +500,9 @@
         "floor": "burning-basement-xl",
         "floorLabel": "Burning Basement XL",
         "captureType": "pause screen / seed confirmation",
-        "seedVisible": "Y6GN QVQM",
+        "seedVisible": "Y6GN QNQM",
         "observations": [
-          "Pause screen seed appears to read Y6GN QVQM.",
+          "Pause screen seed corrected by user to Y6GN QNQM.",
           "Character appears to be The Lost.",
           "Small minimap visible behind pause screen."
         ]
