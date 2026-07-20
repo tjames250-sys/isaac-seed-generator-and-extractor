@@ -8,11 +8,11 @@ An early reverse-engineering helper for Binding of Isaac seed/map behavior, focu
 
 This is not a cracked or verified Isaac map generator yet. The HTML page currently uses a deterministic placeholder generator so we can compare seeds, floors, platform/runtime environments, and observed screenshots in one place while collecting data.
 
-The useful source of truth is the observation data:
+The repository has one app and one shared observation file. The same root `index.html` is used locally and by GitHub Pages:
 
-- `outputs/isaac-seed-observations.json` - run and floor evidence captured from screenshots and notes.
+- `index.html` - static prototype with seed import, manual corrections, and observation matching.
+- `isaac-seed-observations.json` - run and floor evidence captured from screenshots and notes.
 - `outputs/isaac-player-state.json` - current save/unlock evidence that may affect item pools.
-- `outputs/isaac-seed-map-prototype.html` - static prototype with seed import, manual corrections, and observation matching.
 - `outputs/isaac-seed-map-notes.md` - working notes and capture workflow.
 
 ## Local Use
@@ -20,7 +20,7 @@ The useful source of truth is the observation data:
 Open:
 
 ```text
-outputs/isaac-seed-map-prototype.html
+index.html
 ```
 
 The page may auto-load `isaac-seed-observations.json` when browser rules allow it. If not, use the matcher file picker or paste the JSON into the page.
