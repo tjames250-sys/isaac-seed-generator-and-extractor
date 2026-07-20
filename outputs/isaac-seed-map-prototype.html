@@ -290,6 +290,80 @@
       height: var(--cell);
     }
 
+    .editor-panel {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #191617;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .editor-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .editor-grid-wrap {
+      overflow: auto;
+      padding: 10px;
+      background: #171415;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .editor-grid {
+      --edit-cell: 32px;
+      display: grid;
+      grid-template-columns: repeat(var(--cols), var(--edit-cell));
+      grid-template-rows: repeat(var(--rows), var(--edit-cell));
+      gap: 5px;
+      width: max-content;
+    }
+
+    .edit-cell {
+      width: var(--edit-cell);
+      height: var(--edit-cell);
+      border: 1px solid #4c4544;
+      border-radius: 5px;
+      background: #211d1e;
+      color: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .edit-cell.known-room {
+      background: #383133;
+      color: var(--ink);
+      border-color: #80736f;
+    }
+
+    .edit-cell.known-empty {
+      background: #120f10;
+      color: #9c6d66;
+      border-color: #5a302c;
+    }
+
+    .edit-cell.start {
+      background: #315653;
+      border-color: var(--accent-2);
+    }
+
+    .edit-cell.selected {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .editor-details {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
     .notes {
       border-top: 1px solid var(--line);
       padding-top: 14px;
@@ -878,6 +952,56 @@
       <div class="map-wrap">
         <div id="map" class="map" aria-label="Generated floor map"></div>
       </div>
+      <section class="editor-panel" aria-label="Observed map editor">
+        <div class="editor-head">
+          <div>
+            <strong>Observed map editor</strong>
+            <div class="subtle">Separate from the generated guess. Save Observation stores touched cells as user-observed JSON.</div>
+          </div>
+          <div class="actions">
+            <button id="seedObservedFromGenerated" type="button">Start From Guess</button>
+            <button id="clearObservedMap" type="button">Clear Editor</button>
+          </div>
+        </div>
+        <div class="editor-grid-wrap">
+          <div id="observedMap" class="editor-grid" aria-label="Manual observed floor map"></div>
+        </div>
+        <div class="editor-details">
+          <div class="field">
+            <label for="observedCellState">Selected cell</label>
+            <select id="observedCellState">
+              <option value="unknown">Unknown</option>
+              <option value="room">Room exists</option>
+              <option value="empty">No room</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="observedCellType">Room type</label>
+            <select id="observedCellType">
+              <option value="unknown">Unknown</option>
+              <option value="normal">Normal</option>
+              <option value="start">Start</option>
+              <option value="treasure">Treasure</option>
+              <option value="shop">Shop</option>
+              <option value="boss">Boss</option>
+              <option value="curse">Curse</option>
+              <option value="secret">Secret</option>
+              <option value="library">Library</option>
+              <option value="special">Special/odd</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="observedConfidence">Confidence</label>
+            <select id="observedConfidence">
+              <option value="partial" selected>Partial</option>
+              <option value="complete">Complete floor</option>
+              <option value="screenshot-confirmed">Screenshot-confirmed</option>
+              <option value="manual">Manual note</option>
+            </select>
+          </div>
+        </div>
+        <div class="subtle" id="observedMapStatus">No observed cells marked.</div>
+      </section>
     </main>
   </div>
 
@@ -1004,6 +1128,11 @@
     const seedInput = document.querySelector("#seed");
     const floorInput = document.querySelector("#floor");
     const mapEl = document.querySelector("#map");
+    const observedMapEl = document.querySelector("#observedMap");
+    const observedCellStateEl = document.querySelector("#observedCellState");
+    const observedCellTypeEl = document.querySelector("#observedCellType");
+    const observedConfidenceEl = document.querySelector("#observedConfidence");
+    const observedMapStatusEl = document.querySelector("#observedMapStatus");
     const normEl = document.querySelector("#norm");
     const hashEl = document.querySelector("#hash");
     const roomsEl = document.querySelector("#rooms");
@@ -1037,6 +1166,8 @@
     let matcherDataSource = matcherObservations.length ? "saved browser matcher data" : "";
     let activeImportedSeed = null;
     let lastGenerated = null;
+    let observedMap = new Map();
+    let selectedObservedCell = "";
 
     function normalizeSeed(value) {
       return value.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -1220,7 +1351,36 @@
           record.constraints.startMapPreset = startMapPreset;
         }
       }
+      const observedFloor = currentObservedFloor();
+      if (observedFloor) {
+        record.observedFloor = observedFloor;
+      }
       return record;
+    }
+
+    function currentObservedFloor() {
+      if (!observedMap.size || !lastGenerated) return null;
+      const cells = [...observedMap.entries()]
+        .filter(([, cell]) => cell && cell.state !== "unknown")
+        .map(([cellKey, cell]) => {
+          const [x, y] = cellKey.split(",").map(Number);
+          const center = Math.floor(lastGenerated.profile.grid / 2);
+          return {
+            x,
+            y,
+            dx: x - center,
+            dy: y - center,
+            state: cell.state,
+            type: cell.type || "unknown"
+          };
+        });
+      if (!cells.length) return null;
+      return {
+        confidence: observedConfidenceEl.value,
+        coordinateOrigin: "generated-grid-center-start",
+        gridSize: lastGenerated.profile.grid,
+        cells
+      };
     }
 
     function readStartRoomConstraints() {
@@ -1262,7 +1422,8 @@
         long: { exists: true, shape: "long" },
         "2x2": { exists: true, shape: "2x2" },
         L: { exists: true, shape: "L" },
-        "small/odd": { exists: true, shape: "small/odd" }
+        "small/odd": { exists: true, shape: "small/odd" },
+        start: { exists: true, type: "normal" }
       };
       return values[choice] ? { ...values[choice] } : null;
     }
@@ -1853,6 +2014,124 @@
       }[type] ?? "";
     }
 
+    function observedSymbol(cell) {
+      if (!cell || cell.state === "unknown") return "";
+      if (cell.state === "empty") return "X";
+      return symbolFor(cell.type) || "+";
+    }
+
+    function observedClass(cell, cellKey) {
+      const classes = ["edit-cell"];
+      if (cell && cell.state === "room") classes.push("known-room");
+      if (cell && cell.state === "empty") classes.push("known-empty");
+      if (cell && cell.type === "start") classes.push("start");
+      if (cellKey === selectedObservedCell) classes.push("selected");
+      return classes.join(" ");
+    }
+
+    function setObservedCell(cellKey, cell) {
+      if (!cell || cell.state === "unknown") observedMap.delete(cellKey);
+      else observedMap.set(cellKey, cell);
+      syncStartRoomFromObservedMap();
+      renderObservedMap();
+    }
+
+    function cycleObservedCell(cellKey) {
+      const current = observedMap.get(cellKey);
+      if (!current) return setObservedCell(cellKey, { state: "room", type: "unknown" });
+      if (current.state === "room") return setObservedCell(cellKey, { state: "empty", type: "unknown" });
+      setObservedCell(cellKey, null);
+    }
+
+    function updateObservedCellControls() {
+      const cell = observedMap.get(selectedObservedCell) || { state: "unknown", type: "unknown" };
+      observedCellStateEl.value = cell.state || "unknown";
+      observedCellTypeEl.value = cell.type || "unknown";
+      observedCellTypeEl.disabled = observedCellStateEl.value !== "room";
+    }
+
+    function applyObservedCellControls() {
+      if (!selectedObservedCell) return;
+      const state = observedCellStateEl.value;
+      if (state === "unknown") {
+        setObservedCell(selectedObservedCell, null);
+        return;
+      }
+      setObservedCell(selectedObservedCell, {
+        state,
+        type: state === "room" ? observedCellTypeEl.value : "unknown"
+      });
+    }
+
+    function renderObservedMap() {
+      const profile = lastGenerated ? lastGenerated.profile : currentProfile();
+      const grid = profile.grid;
+      observedMapEl.style.setProperty("--cols", grid);
+      observedMapEl.style.setProperty("--rows", grid);
+      observedMapEl.innerHTML = "";
+
+      for (let y = 0; y < grid; y++) {
+        for (let x = 0; x < grid; x++) {
+          const cellKey = key(x, y);
+          const cell = observedMap.get(cellKey);
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = observedClass(cell, cellKey);
+          button.textContent = observedSymbol(cell);
+          button.setAttribute("aria-label", `Observed map cell ${x}, ${y}`);
+          button.addEventListener("click", () => {
+            selectedObservedCell = cellKey;
+            cycleObservedCell(cellKey);
+            updateObservedCellControls();
+          });
+          observedMapEl.append(button);
+        }
+      }
+
+      const marked = [...observedMap.values()].filter(cell => cell.state !== "unknown").length;
+      observedMapStatusEl.textContent = marked
+        ? `${marked} observed cell${marked === 1 ? "" : "s"} marked. These stay separate from the generated map until saved as observation JSON.`
+        : "No observed cells marked.";
+      updateObservedCellControls();
+    }
+
+    function seedObservedFromGenerated() {
+      if (!lastGenerated) return;
+      observedMap = new Map();
+      for (const room of lastGenerated.rooms.values()) {
+        observedMap.set(key(room.x, room.y), { state: "room", type: room.type || "unknown" });
+      }
+      selectedObservedCell = key(Math.floor(lastGenerated.profile.grid / 2), Math.floor(lastGenerated.profile.grid / 2));
+      syncStartRoomFromObservedMap();
+      renderObservedMap();
+    }
+
+    function clearObservedMap() {
+      observedMap = new Map();
+      selectedObservedCell = "";
+      renderObservedMap();
+    }
+
+    function syncStartRoomFromObservedMap() {
+      if (!lastGenerated) return;
+      const center = Math.floor(lastGenerated.profile.grid / 2);
+      const directions = {
+        north: [0, -1],
+        east: [1, 0],
+        south: [0, 1],
+        west: [-1, 0]
+      };
+      for (const [direction, offset] of Object.entries(directions)) {
+        const cell = observedMap.get(key(center + offset[0], center + offset[1]));
+        if (!cell) continue;
+        if (cell.state === "empty") {
+          setStartRoomChoice(direction, "missing");
+        } else if (cell.state === "room") {
+          setStartRoomChoice(direction, cell.type && cell.type !== "unknown" ? cell.type : "exists");
+        }
+      }
+    }
+
     function render() {
       const normalized = normalizeSeed(seedInput.value) || "0";
       const floorId = floorInput.value;
@@ -1901,6 +2180,7 @@
       roomsEl.textContent = String(rooms.size);
       farthestEl.textContent = String(farthest);
       updateSeedWarning(profile, floor);
+      renderObservedMap();
       renderMatchResults();
     }
 
@@ -1971,6 +2251,7 @@
       renderObservations();
       observationNotesInput.value = "";
       clearStartRoomHelper();
+      clearObservedMap();
     });
     document.querySelector("#exportObservations").addEventListener("click", exportObservations);
     document.querySelector("#copyObservation").addEventListener("click", async () => {
@@ -2001,6 +2282,10 @@
       clearStartRoomHelper();
       observationStatusTextEl.textContent = "Start-room correction cleared.";
     });
+    document.querySelector("#seedObservedFromGenerated").addEventListener("click", seedObservedFromGenerated);
+    document.querySelector("#clearObservedMap").addEventListener("click", clearObservedMap);
+    observedCellStateEl.addEventListener("change", applyObservedCellControls);
+    observedCellTypeEl.addEventListener("change", applyObservedCellControls);
     document.querySelector("#loadObservationJson").addEventListener("click", () => {
       const text = observationJsonInput.value.trim();
       if (!text) {
@@ -2040,13 +2325,31 @@
     });
     seedInput.addEventListener("input", () => {
       activeImportedSeed = null;
+      observedMap = new Map();
+      selectedObservedCell = "";
       render();
     });
-    floorInput.addEventListener("change", render);
-    sourcePlatformEl.addEventListener("change", render);
-    sourceVersionEl.addEventListener("change", render);
+    floorInput.addEventListener("change", () => {
+      observedMap = new Map();
+      selectedObservedCell = "";
+      render();
+    });
+    sourcePlatformEl.addEventListener("change", () => {
+      observedMap = new Map();
+      selectedObservedCell = "";
+      render();
+    });
+    sourceVersionEl.addEventListener("change", () => {
+      observedMap = new Map();
+      selectedObservedCell = "";
+      render();
+    });
     sourceFormatEl.addEventListener("change", render);
-    sourceDifficultyEl.addEventListener("change", render);
+    sourceDifficultyEl.addEventListener("change", () => {
+      observedMap = new Map();
+      selectedObservedCell = "";
+      render();
+    });
 
     initializeStartRoomDropdowns();
     startMapPresetInput.addEventListener("change", () => applyStartMapPreset(startMapPresetInput.value));
