@@ -822,6 +822,7 @@
     const importedSeeds = [];
     const observations = loadObservations();
     let matcherObservations = loadMatcherObservations();
+    let matcherDataSource = matcherObservations.length ? "saved browser matcher data" : "";
     let activeImportedSeed = null;
     let lastGenerated = null;
 
@@ -942,21 +943,26 @@
       throw new Error("Expected an observation object, an array, or an object with an observations array.");
     }
 
-    function loadMatcherPayload(text, sourceLabel) {
+    function loadMatcherPayload(text, sourceLabel, options = {}) {
       const parsed = parseObservationPayload(text);
       matcherObservations = parsed.filter(record => record && typeof record === "object");
-      saveMatcherObservations();
+      matcherDataSource = sourceLabel;
+      if (options.persist !== false) saveMatcherObservations();
       matcherStatusEl.textContent = `${matcherObservations.length} matcher observation${matcherObservations.length === 1 ? "" : "s"} loaded from ${sourceLabel}.`;
       renderMatchResults();
     }
 
     async function tryAutoloadMatcherData() {
-      if (matcherObservations.length) return;
+      if (matcherObservations.length) {
+        renderMatchResults();
+        return;
+      }
       try {
         const response = await fetch("isaac-seed-observations.json", { cache: "no-store" });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        loadMatcherPayload(await response.text(), "isaac-seed-observations.json");
-      } catch {
+        loadMatcherPayload(await response.text(), "website observations JSON", { persist: false });
+      } catch (error) {
+        matcherDataSource = `autoload failed: ${error.message}`;
         renderMatchResults();
       }
     }
@@ -1257,11 +1263,13 @@
       matchListEl.innerHTML = "";
 
       if (!matcherObservations.length) {
-        matcherStatusEl.textContent = "No matcher data loaded yet.";
+        matcherStatusEl.textContent = matcherDataSource.startsWith("autoload failed")
+          ? `No matcher data loaded. Website observations JSON did not autoload (${matcherDataSource.replace("autoload failed: ", "")}).`
+          : "No matcher data loaded yet. On the website, the observations JSON should autoload when available.";
         const item = document.createElement("div");
         item.className = "match-item";
         const text = document.createElement("span");
-        text.textContent = "Load isaac-seed-observations.json to compare the current seed/environment/floor against captured evidence.";
+        text.textContent = "Use the file picker or paste isaac-seed-observations.json if autoload is unavailable.";
         item.append(text);
         matchListEl.append(item);
         return;
@@ -1280,13 +1288,13 @@
         }))
         .filter(match => match.evidence.length);
 
-      matcherStatusEl.textContent = `${matcherObservations.length} matcher observation${matcherObservations.length === 1 ? "" : "s"} loaded; ${matches.length} relevant to this seed/environment/floor.`;
+      matcherStatusEl.textContent = `${matcherObservations.length} matcher observation${matcherObservations.length === 1 ? "" : "s"} loaded from ${matcherDataSource || "unknown source"}; ${matches.length} relevant to this seed/environment/floor.`;
 
       if (!matches.length) {
         const item = document.createElement("div");
         item.className = "match-item";
         const text = document.createElement("span");
-        text.textContent = "No matching observation for the current seed, profile, and floor bucket.";
+        text.textContent = "No matching observation for the current seed, environment, and floor bucket.";
         item.append(text);
         matchListEl.append(item);
         return;
@@ -1610,6 +1618,7 @@
     });
     document.querySelector("#clearMatcherData").addEventListener("click", () => {
       matcherObservations = [];
+      matcherDataSource = "";
       observationJsonInput.value = "";
       observationFileInput.value = "";
       saveMatcherObservations();
